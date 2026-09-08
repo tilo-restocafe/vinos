@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Admin — Cava de Vinos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary:    #6b1a2e;
+            --gold:       #c9a84c;
+            --gold-light: #e4c97e;
+            --dark:       #1a0a0f;
+            --dark2:      #2d0e1a;
+            --cream:      #f5ede0;
+            --shadow-sm:  0 4px 10px rgba(0,0,0,0.4);
+            --shadow-md:  0 8px 28px rgba(0,0,0,0.6);
+            --shadow-lg:  0 16px 48px rgba(0,0,0,0.8);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            margin: 0; padding: 24px;
+            background: var(--dark);
+            color: var(--cream);
+            background-image: url('img/fondo_vinos.png');
+            background-repeat: repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed; inset: 0;
+            background: rgba(15,5,10,0.88);
+            z-index: -1; pointer-events: none;
+        }
+
+        .container {
+            max-width: 1320px;
+            margin: 0 auto;
+            background: rgba(30,10,18,0.97);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(201,168,76,0.22);
+            border-radius: 26px;
+            padding: 32px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold-light);
+            margin-top: 0; margin-bottom: 22px;
+            font-size: 26px; font-weight: 700;
+            border-bottom: 2px solid rgba(201,168,76,0.35);
+            padding-bottom: 12px;
+            display: flex; align-items: center; gap: 10px;
+        }
+
+        /* ===== TOP ROW ===== */
+        .topRow {
+            display: flex; flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px; gap: 18px;
+            background: rgba(45,14,26,0.6);
+            padding: 20px; border-radius: 16px;
+            border: 1px solid rgba(201,168,76,0.14);
+        }
+        .git-config { flex: 1; min-width: 300px; }
+        .git-title {
+            font-size: 12px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.6px;
+            color: var(--gold); margin-bottom: 8px;
+        }
+        .token-group {
+            display: flex; flex-wrap: wrap;
+            gap: 8px; align-items: center;
+        }
+        .controls {
+            display: flex; flex-wrap: wrap;
+            gap: 10px; align-items: center;
+        }
+
+        /* ===== INPUTS ===== */
+        input[type="text"],
+        input[type="password"],
+        textarea, select {
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(201,168,76,0.22);
+            background: rgba(30,10,18,0.8);
+            color: var(--cream);
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(201,168,76,0.2);
+            background: rgba(45,14,26,0.95);
+        }
+        select option { background: #2d0e1a; color: var(--cream); }
+
+        /* ===== BUTTONS ===== */
+        button {
+            background: var(--primary);
+            color: var(--gold-light);
+            border: none; padding: 10px 18px;
+            border-radius: 10px; cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600; font-size: 14px;
+            transition: all 0.25s ease;
+            display: inline-flex; align-items: center;
+            justify-content: center; gap: 6px;
+            box-shadow: var(--shadow-sm);
+        }
+        button:hover { background: #8a2240; transform: translateY(-1px); }
+        button.secondary { background: #2a5e3a; color: #a8f0b8; }
+        button.secondary:hover { background: #1e4a2c; }
+        button.danger { background: #7a1a1a; color: #f0b0b0; }
+        button.danger:hover { background: #6a1010; }
+        button.gold {
+            background: linear-gradient(135deg, #b8902a, var(--gold));
+            color: #1a0a0f; font-weight: 700;
+        }
+        button.gold:hover { background: linear-gradient(135deg, var(--gold), #e4c97e); }
+
+        /* ===== FORMULARIO ===== */
+        form {
+            background: rgba(30,10,18,0.98);
+            padding: 26px; border-radius: 18px;
+            border: 1px solid rgba(201,168,76,0.28);
+            margin-bottom: 26px; display: none;
+            box-shadow: var(--shadow-md);
+            animation: slideDown 0.3s ease-out;
+        }
+        @keyframes slideDown {
+            from { opacity:0; transform: translateY(-12px); }
+            to   { opacity:1; transform: translateY(0); }
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 5px; }
+        .form-group label {
+            font-size: 12px; font-weight: 700;
+            color: var(--gold); text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select { width: 100%; }
+        .full-col { grid-column: 1 / -1; }
+
+        /* ===== SECCIÓN FICHA DE CATADOR ===== */
+        .ficha-section {
+            grid-column: 1 / -1;
+            background: rgba(45,14,26,0.5);
+            border: 1px dashed rgba(201,168,76,0.25);
+            border-radius: 14px; padding: 18px;
+            margin-top: 6px;
+        }
+        .ficha-section-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold-light); font-size: 16px;
+            font-weight: 600; margin: 0 0 14px;
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        /* ===== SECCIÓN TRADUCCIONES ===== */
+        .translations-section {
+            grid-column: 1 / -1;
+            margin-top: 10px;
+            border-top: 1px dashed rgba(201,168,76,0.25);
+            padding-top: 18px;
+        }
+        .translations-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .translations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(201,168,76,0.18);
+        }
+        .lang-card {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .lang-title {
+            font-weight: 700;
+            color: var(--gold);
+            font-size: 13px;
+            border-bottom: 1px solid rgba(201,168,76,0.18);
+            padding-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .lang-card label {
+            font-size: 11px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 3px;
+            color: var(--gold-light);
+        }
+        .lang-card input, .lang-card textarea {
+            font-size: 13px;
+            padding: 8px 10px;
+        }
+
+        /* ===== TABLA ===== */
+        table {
+            width: 100%; border-collapse: separate;
+            border-spacing: 0; margin-top: 16px;
+            border-radius: 16px; overflow: hidden;
+            border: 1px solid rgba(201,168,76,0.18);
+            box-shadow: var(--shadow-sm);
+        }
+        th, td {
+            padding: 11px 13px;
+            vertical-align: middle; text-align: left;
+        }
+        th {
+            background: linear-gradient(135deg, var(--primary), #8a2240);
+            color: var(--gold-light); font-weight: 700;
+            font-size: 12px; text-transform: uppercase;
+            letter-spacing: 0.5px; border: none;
+        }
+        td {
+            background: rgba(30,10,18,0.6);
+            border-bottom: 1px solid rgba(201,168,76,0.1);
+            border-right: 1px solid rgba(201,168,76,0.06);
+            color: var(--cream);
+        }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: rgba(45,14,26,0.85); }
+
+        td input[type="text"], td textarea {
+            border: 1px solid transparent;
+            background: transparent;
+            width: 100%; padding: 5px 7px;
+            font-size: 13px; color: var(--cream);
+            border-radius: 6px; transition: all 0.2s;
+        }
+        td input[type="text"]:focus, td textarea:focus {
+            background: rgba(45,14,26,0.95);
+            border-color: var(--gold);
+            box-shadow: 0 2px 8px rgba(201,168,76,0.2);
+        }
+        td textarea { resize: vertical; min-height: 42px; font-family: inherit; }
+
+        img.mini {
+            max-width: 55px; max-height: 55px;
+            border-radius: 8px; object-fit: cover;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(201,168,76,0.3);
+        }
+        .wine-emoji { font-size: 32px; }
+
+        /* ===== ACTION BUTTONS ROW ===== */
+        #actionButtons {
+            display: flex; gap: 10px;
+            margin-bottom: 22px; flex-wrap: wrap;
+        }
+
+        .rowActions { display: flex; gap: 5px; }
+
+        .previewImg {
+            max-width: 130px; max-height: 130px;
+            margin-top: 10px; border-radius: 10px;
+            border: 2px dashed rgba(201,168,76,0.4);
+            object-fit: cover; display: none;
+        }
+
+        /* ===== TIPO BADGE ===== */
+        .tipo-badge {
+            font-size: 11px; font-weight: 700;
+            padding: 3px 10px; border-radius: 12px;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        .tipo-Tinto     { background: rgba(107,26,46,0.8); color: #f8d0d8; }
+        .tipo-Blanco    { background: rgba(80,70,10,0.8);  color: #f5e8a0; }
+        .tipo-Rosado    { background: rgba(140,40,80,0.8); color: #ffc0cb; }
+        .tipo-Espumante { background: rgba(20,50,90,0.8);  color: #b0d8ff; }
+        .tipo-Otro      { background: rgba(60,60,60,0.8);  color: #ddd; }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed; top: 24px; right: 24px;
+            z-index: 2000; padding: 14px 20px;
+            border-radius: 12px; color: white;
+            font-weight: 600; max-width: 360px;
+            font-size: 14px;
+            opacity: 0; transform: translateY(-10px);
+            transition: opacity .25s, transform .25s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.ok  { background: #2a5e3a; }
+        .toast.info{ background: #1e3a6a; }
+        .toast.err { background: #7a1a1a; }
+
+        /* ===== LOADING ===== */
+        #loadingOverlay {
+            position: fixed; inset: 0;
+            background: rgba(15,5,10,0.88);
+            backdrop-filter: blur(10px);
+            color: var(--cream); display: none;
+            flex-direction: column; align-items: center;
+            justify-content: center; font-size: 18px;
+            z-index: 5000; text-align: center; padding: 20px;
+        }
+        .spinner {
+            width: 48px; height: 48px;
+            border: 4px solid rgba(201,168,76,0.15);
+            border-left-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ===== RESPONSIVE ===== */
+        @media(max-width:850px) {
+            .topRow { flex-direction: column; }
+            #actionButtons { flex-direction: column; }
+            table, thead, tbody, th, td, tr { display: block; }
+            thead tr { position: absolute; top: -9999px; left: -9999px; }
+            tr {
+                border: 1px solid rgba(201,168,76,0.18);
+                border-radius: 12px; margin-bottom: 12px;
+                background: rgba(30,10,18,0.95); padding: 10px;
+            }
+            td {
+                border: none; border-bottom: 1px solid rgba(201,168,76,0.08);
+                position: relative; padding-left: 38%; text-align: right;
+            }
+            td:last-child { border-bottom: none; }
+            td::before {
+                position: absolute; top: 50%; left: 10px;
+                transform: translateY(-50%); width: 33%;
+                white-space: nowrap; text-align: left;
+                font-weight: 700; font-size: 11px; color: var(--gold);
+            }
+            td:nth-of-type(1)::before { content: "Foto"; }
+            td:nth-of-type(2)::before { content: "Nombre"; }
+            td:nth-of-type(3)::before { content: "Bodega"; }
+            td:nth-of-type(4)::before { content: "Tipo"; }
+            td:nth-of-type(5)::before { content: "Categoría"; }
+            td:nth-of-type(6)::before { content: "Año"; }
+            td:nth-of-type(7)::before { content: "Precio ($)"; }
+            td:nth-of-type(8)::before { content: "Acciones"; }
+            .rowActions { justify-content: flex-end; }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1>🍷 Administrador — Cava de Vinos</h1>
+
+    <!-- TOP ROW: GITHUB CONFIG -->
+    <div class="topRow">
+        <div class="git-config">
+            <div class="git-title">📍 Repositorio de GitHub</div>
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
+                <div><span style="font-size:13px; color:rgba(245,237,224,0.6)">Repositorio:</span> <b id="repoDisplay" style="color:var(--gold)">cargando...</b></div>
+                <button id="btnLockAdmin" onclick="toggleAdminLock()" style="padding:5px 12px; font-size:12px; background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.35); border-radius:8px; color:var(--gold-light);">🔒 Acceso Propietario</button>
+            </div>
+            <div class="token-group" id="tokenControlGroup" style="display:none;">
+                <label style="font-size:13px; font-weight:600; color:var(--gold);">GitHub Token:</label>
+                <input type="password" id="token" placeholder="Pegá tu token aquí" style="max-width:210px">
+                <button onclick="saveToken()">Guardar</button>
+                <button onclick="clearToken()" style="background:rgba(120,120,120,0.3); color:#aaa;">Borrar</button>
+                <span id="tokenStatus" style="font-size:12px; font-weight:bold; color:var(--gold);">Validando...</span>
+            </div>
+        </div>
+        <div class="controls">
+            <input id="searchAdmin" placeholder="Filtrar vinos..." oninput="filterVinos()" style="min-width:220px">
+            <button onclick="toggleForm()">➕ Nuevo Vino</button>
+        </div>
+    </div>
+
+    <!-- BOTONES DE ACCIÓN -->
+    <div id="actionButtons">
+        <button class="gold" id="guardarTodos" onclick="guardarTodo()">☁️ GUARDAR EN GITHUB (3 IDIOMAS)</button>
+        <button class="secondary" onclick="irIndex()">🍷 Ver Carta de Vinos</button>
+        <button class="secondary" onclick="irWhatsApp()" style="background:#1a5c30; color:#a8f0b8;">📲 Soporte WhatsApp</button>
+    </div>
+
+    <!-- FORMULARIO ALTA / EDICIÓN -->
+    <form id="form">
+        <input type="hidden" id="editId">
+        <h3 id="formTitle" style="margin-top:0; font-family:'Playfair Display',serif; color:var(--gold-light); border-bottom:1px solid rgba(201,168,76,0.2); padding-bottom:8px; margin-bottom:18px;">
+            Agregar Nuevo Vino
+        </h3>
+
+        <div class="form-grid">
+            <!-- DATOS BÁSICOS -->
+            <div class="form-group">
+                <label>Nombre del Vino</label>
+                <input id="nombre" type="text" placeholder="Ej: Zuccardi Malbec">
+            </div>
+            <div class="form-group">
+                <label>Bodega</label>
+                <input id="bodega" type="text" placeholder="Ej: Zuccardi">
+            </div>
+            <div class="form-group">
+                <label>Región / Origen</label>
+                <input id="region" type="text" placeholder="Ej: Valle de Uco, Mendoza">
+            </div>
+            <div class="form-group">
+                <label>Año (Cosecha)</label>
+                <input id="anio" type="text" placeholder="Ej: 2021">
+            </div>
+            <div class="form-group">
+                <label>Tipo de Vino</label>
+                <select id="tipo">
+                    <option value="Tinto">🍷 Tinto</option>
+                    <option value="Blanco">🥂 Blanco</option>
+                    <option value="Rosado">🌹 Rosado</option>
+                    <option value="Espumante">🍾 Espumante</option>
+                    <option value="Dulce">🍯 Dulce</option>
+                    <option value="Otro">🍶 Otro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Categoría</label>
+                <input id="categoria" type="text" placeholder="Ej: Gran Reserva, Tintos Premium">
+            </div>
+            <div class="form-group">
+                <label>Precio ($)</label>
+                <input id="precio" type="text" placeholder="Solo números">
+            </div>
+            <div class="form-group">
+                <label>Ruta de Imagen (img/nombre.jpg)</label>
+                <input id="imagen" type="text" oninput="previewImage()" placeholder="img/mi-vino.jpg">
+                <img id="preview" class="previewImg">
+            </div>
+
+            <!-- FICHA DE CATADOR -->
+            <div class="ficha-section">
+                <p class="ficha-section-title">📖 Ficha de Catador</p>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap:14px;">
+                    <div class="form-group">
+                        <label>🍇 Notas de Cata (Descripción)</label>
+                        <textarea id="descripcion" rows="3" placeholder="Frutos rojos maduros, notas de vainilla, taninos suaves..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>📜 Historia del Vino / Bodega</label>
+                        <textarea id="historia" rows="3" placeholder="La bodega fue fundada en..."></textarea>
+                    </div>
+                    <div class="form-group full-col">
+                        <label>🍽️ Maridaje Recomendado</label>
+                        <input id="maridaje" type="text" placeholder="Ej: Asado, cordero, pasta con salsa de carne, quesos duros">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN TRADUCCIONES -->
+            <div class="translations-section">
+                <div class="translations-header">
+                    <h4 style="margin:0; color:var(--gold-light); font-family:'Playfair Display',serif; font-size:16px; display:flex; align-items:center; gap:8px;">
+                        🌐 Traducciones de Idioma (Opcional)
+                    </h4>
+                    <button type="button" onclick="autoTraducir()" style="background:var(--primary); font-size:12px; padding:7px 14px; border-radius:8px; box-shadow:var(--shadow-sm); border:1px solid rgba(201,168,76,0.3);">
+                        ✨ Auto-traducir con IA
+                    </button>
+                </div>
+
+                <div class="translations-grid">
+                    <!-- ENGLISH SECTION -->
+                    <div class="lang-card">
+                        <div class="lang-title">🇬🇧 Inglés (EN)</div>
+                        <div>
+                            <label>Nombre (EN)</label>
+                            <input id="nombre_en" type="text" placeholder="Wine Name in English">
+                        </div>
+                        <div>
+                            <label>Categoría (EN)</label>
+                            <input id="categoria_en" type="text" placeholder="Category in English">
+                        </div>
+                        <div>
+                            <label>Notas de Cata (EN)</label>
+                            <textarea id="descripcion_en" rows="2" placeholder="Tasting notes in English"></textarea>
+                        </div>
+                        <div>
+                            <label>Historia (EN)</label>
+                            <textarea id="historia_en" rows="2" placeholder="History in English"></textarea>
+                        </div>
+                        <div>
+                            <label>Maridaje (EN)</label>
+                            <input id="maridaje_en" type="text" placeholder="Food pairing in English">
+                        </div>
+                    </div>
+
+                    <!-- PORTUGUESE SECTION -->
+                    <div class="lang-card">
+                        <div class="lang-title">🇧🇷 Portugués (PT)</div>
+                        <div>
+                            <label>Nome (PT)</label>
+                            <input id="nombre_pt" type="text" placeholder="Nome do vinho em português">
+                        </div>
+                        <div>
+                            <label>Categoria (PT)</label>
+                            <input id="categoria_pt" type="text" placeholder="Categoria em português">
+                        </div>
+                        <div>
+                            <label>Notas de Degustação (PT)</label>
+                            <textarea id="descripcion_pt" rows="2" placeholder="Notas de degustação em português"></textarea>
+                        </div>
+                        <div>
+                            <label>História (PT)</label>
+                            <textarea id="historia_pt" rows="2" placeholder="História em português"></textarea>
+                        </div>
+                        <div>
+                            <label>Harmonização (PT)</label>
+                            <input id="maridaje_pt" type="text" placeholder="Harmonização em português">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top:20px; display:flex; gap:10px;">
+            <button type="button" onclick="guardarFormulario()">✅ Agregar a la lista</button>
+            <button type="button" onclick="cancelForm()" style="background:rgba(120,120,120,0.3); color:#aaa;">Cancelar</button>
+        </div>
+    </form>
+
+    <!-- TABLA PRINCIPAL -->
+    <table>
+        <thead>
+            <tr>
+                <th style="width:65px">Foto</th>
+                <th>Nombre</th>
+                <th>Bodega</th>
+                <th style="width:100px">Tipo</th>
+                <th style="width:140px">Categoría</th>
+                <th style="width:65px">Año</th>
+                <th style="width:100px">Precio ($)</th>
+                <th style="width:130px">Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+    </table>
+</div>
+
+<!-- LOADING OVERLAY -->
+<div id="loadingOverlay">
+    <div class="spinner"></div>
+    <b style="font-size:20px; color:var(--gold);">Sincronizando Cava de Vinos (3 Idiomas)...</b>
+    <div style="font-size:13px; margin-top:10px; color:rgba(245,237,224,0.6)">No cierres esta página. Se descargará un respaldo automáticamente.</div>
+</div>
+
+<script>
+    // ===== DETECCIÓN DINÁMICA GITHUB =====
+    const host = window.location.hostname;
+    const pathParts = window.location.pathname.split("/");
+    let USERNAME = "tilo-restocafe";
+    let REPO = "cava-de-vinos";
+    if (host.includes(".github.io")) {
+        USERNAME = host.split(".")[0];
+        REPO = pathParts[1] || "";
+    }
+    document.getElementById('repoDisplay').innerText = `${USERNAME} / ${REPO}`;
+
+    const BRANCH    = "main";
+    const MAIN_JSON = "vinos.json";
+    const EN_JSON   = "vinoing.json";
+    const PT_JSON   = "vinoportu.json";
+
+    let vinos = [];
+    let vinosEN = [];
+    let vinosPT = [];
+    let guardando = false;
+
+    // ===== ADMIN LOCK =====
+    const ADMIN_CODE = "cava2025";
+
+    function toggleAdminLock() {
+        const group = document.getElementById('tokenControlGroup');
+        const btn   = document.getElementById('btnLockAdmin');
+        if (group.style.display === 'flex') {
+            group.style.display = 'none';
+            btn.innerHTML = '🔒 Acceso Propietario';
+            sessionStorage.removeItem('admin_unlocked');
+            showToast("Acceso cerrado", "info");
+        } else {
+            if (sessionStorage.getItem('admin_unlocked') === 'true') {
+                group.style.display = 'flex'; btn.innerHTML = '🔓 Propietario Activo'; return;
+            }
+            const code = prompt("Ingresá el código de propietario:");
+            if (code === ADMIN_CODE) {
+                group.style.display = 'flex'; btn.innerHTML = '🔓 Propietario Activo';
+                sessionStorage.setItem('admin_unlocked','true');
+                showToast("Acceso concedido 🍷","ok");
+            } else if (code !== null) showToast("Código incorrecto","err");
+        }
+    }
+
+    function saveToken() {
+        const t = document.getElementById('token').value.trim();
+        localStorage.setItem('github_token', t);
+        validarToken(); showToast('Token guardado');
+    }
+    function clearToken() { localStorage.removeItem('github_token'); location.reload(); }
+    function getToken()   { return localStorage.getItem('github_token'); }
+
+    async function validarToken() {
+        const token = getToken();
+        const statusEl = document.getElementById('tokenStatus');
+        if (!token) { statusEl.innerText = "❌ Sin Token (Solo Lectura)"; statusEl.style.color = "var(--gold)"; return; }
+        try {
+            const res = await fetch('https://api.github.com/user', { headers: { Authorization: `token ${token}` } });
+            if (res.ok) {
+                const d = await res.json();
+                statusEl.innerText = `✅ Activo: ${d.login}`; statusEl.style.color = "#4caf7a";
+            } else { statusEl.innerText = "⚠️ Token inválido"; statusEl.style.color = "#e07070"; }
+        } catch { statusEl.innerText = "Error de conexión"; statusEl.style.color = "#e07070"; }
+    }
+
+    // ===== UI HELPERS =====
+    function mostrarLoading() { document.getElementById('loadingOverlay').style.display = 'flex'; }
+    function ocultarLoading() { document.getElementById('loadingOverlay').style.display = 'none'; }
+    function bloquearUI()     { document.querySelectorAll('button').forEach(b => { b.disabled = true; b.style.opacity='0.5'; }); }
+    function desbloquearUI()  { document.querySelectorAll('button').forEach(b => { b.disabled = false; b.style.opacity='1'; }); }
+
+    function showToast(msg, variant = 'ok') {
+        const div = document.createElement('div');
+        div.className = `toast ${variant}`; div.innerText = msg;
+        document.body.appendChild(div);
+        requestAnimationFrame(() => div.classList.add('show'));
+        setTimeout(() => { div.classList.remove('show'); setTimeout(() => div.remove(), 300); }, 3500);
+    }
+
+    // ===== DATOS =====
+    function sanitizePrice(v) { return String(v || '0').replace(/[^\d]/g, ''); }
+
+    function generateNextId() {
+        let max = 0;
+        vinos.forEach(v => { const n = parseInt((v.id||'').replace('vino',''),10); if (!isNaN(n) && n > max) max = n; });
+        return 'vino' + String(max + 1).padStart(4,'0');
+    }
+
+    // ===== CARGA DE VINOS (3 IDIOMAS) =====
+    async function loadVinos() {
+        try {
+            const [rES, rEN, rPT] = await Promise.all([
+                fetch(`https://raw.githubusercontent.com/${USERNAME}/${REPO}/${BRANCH}/${MAIN_JSON}?t=${Date.now()}`),
+                fetch(`https://raw.githubusercontent.com/${USERNAME}/${REPO}/${BRANCH}/${EN_JSON}?t=${Date.now()}`),
+                fetch(`https://raw.githubusercontent.com/${USERNAME}/${REPO}/${BRANCH}/${PT_JSON}?t=${Date.now()}`)
+            ]);
+
+            if (!rES.ok) throw new Error('No se pudo cargar desde GitHub');
+            vinos = await rES.json();
+            if (rEN.ok) { try { vinosEN = await rEN.json(); } catch(e){} }
+            if (rPT.ok) { try { vinosPT = await rPT.json(); } catch(e){} }
+
+            render(vinos);
+            const tSaved = getToken();
+            if (tSaved) document.getElementById('token').value = tSaved;
+        } catch(e) {
+            console.warn("Intentando carga local...", e);
+            try {
+                const [localES, localEN, localPT] = await Promise.all([
+                    fetch(`./${MAIN_JSON}?t=${Date.now()}`),
+                    fetch(`./${EN_JSON}?t=${Date.now()}`),
+                    fetch(`./${PT_JSON}?t=${Date.now()}`)
+                ]);
+                if (!localES.ok) throw new Error();
+                vinos = await localES.json();
+                if (localEN.ok) { try { vinosEN = await localEN.json(); } catch(e){} }
+                if (localPT.ok) { try { vinosPT = await localPT.json(); } catch(e){} }
+
+                render(vinos);
+                showToast("Cargado offline 🔌","info");
+            } catch {
+                showToast("No se pudo cargar la carta de vinos.","err");
+            }
+        }
+    }
+
+    // ===== RENDER TABLA =====
+    function tipoBadgeClass(tipo) {
+        const t = tipo || 'Otro';
+        if (['Tinto','Blanco','Rosado','Espumante','Dulce'].includes(t)) return `tipo-${t}`;
+        return 'tipo-Otro';
+    }
+
+    function render(lista) {
+        const tb = document.getElementById('tbody');
+        tb.innerHTML = '';
+        lista.forEach(v => {
+            const tr = document.createElement('tr');
+            tr.dataset.rowId = v.id || '';
+            const badgeClass = tipoBadgeClass(v.tipo);
+            tr.innerHTML = `
+                <td style="text-align:center">
+                    ${v.imagen
+                        ? `<img src="${v.imagen}" class="mini" onerror="this.style.display='none'">`
+                        : `<span class="wine-emoji">🍷</span>`
+                    }
+                </td>
+                <td><input type="text" value="${(v.nombre||'').replace(/"/g,'&quot;')}" placeholder="Nombre del vino"></td>
+                <td><input type="text" value="${(v.bodega||'').replace(/"/g,'&quot;')}" placeholder="Bodega"></td>
+                <td><span class="tipo-badge ${badgeClass}">${v.tipo||'Tinto'}</span></td>
+                <td><input type="text" value="${(v.categoria||'').replace(/"/g,'&quot;')}" placeholder="Categoría"></td>
+                <td><input type="text" value="${v.anio||''}" placeholder="Año" style="max-width:60px"></td>
+                <td><input type="text" class="input-precio" value="${v.precio||'0'}" style="font-weight:700; color:var(--gold); max-width:90px" placeholder="Precio"></td>
+                <td class="rowActions">
+                    <button style="background:rgba(201,168,76,0.2); color:var(--gold-light); font-size:12px; padding:6px 10px;" class="editBtn" title="Cargar en editor">✏️</button>
+                    <button class="danger deleteBtn" style="font-size:12px; padding:6px 10px;" title="Eliminar">🗑️</button>
+                </td>
+            `;
+
+            // Botón editar → carga en formulario
+            tr.querySelector('.editBtn').addEventListener('click', () => editarVino(v.id));
+
+            // Botón eliminar
+            tr.querySelector('.deleteBtn').addEventListener('click', () => {
+                if (confirm(`¿Eliminar "${v.nombre}"?`)) {
+                    vinos = vinos.filter(x => x.id !== v.id);
+                    vinosEN = vinosEN.filter(x => x.id !== v.id);
+                    vinosPT = vinosPT.filter(x => x.id !== v.id);
+                    render(vinos);
+                    showToast(`"${v.nombre}" eliminado de la lista`, 'info');
+                }
+            });
+
+            tb.appendChild(tr);
+        });
+    }
+
+    // ===== GUARDAR CAMBIOS DE TABLA =====
+    function recogerDatosDeTabla() {
+        const rows = document.querySelectorAll('#tbody tr');
+        rows.forEach((tr) => {
+            const inputs = tr.querySelectorAll('input[type="text"]');
+            const id = tr.dataset.rowId;
+            const idx = vinos.findIndex(v => v.id === id);
+            if (idx === -1) return;
+            vinos[idx].nombre    = inputs[0].value.trim();
+            vinos[idx].bodega    = inputs[1].value.trim();
+            vinos[idx].categoria = inputs[2].value.trim();
+            vinos[idx].anio      = inputs[3].value.trim();
+            vinos[idx].precio    = sanitizePrice(inputs[4].value);
+        });
+    }
+
+    // ===== AUTO TRADUCCIÓN CON IA =====
+    async function autoTraducir() {
+        const esNombre   = document.getElementById('nombre').value.trim();
+        const esCat      = document.getElementById('categoria').value.trim();
+        const esDesc     = document.getElementById('descripcion').value.trim();
+        const esHist     = document.getElementById('historia').value.trim();
+        const esMaridaje = document.getElementById('maridaje').value.trim();
+
+        if (!esNombre && !esDesc) {
+            showToast("Escribe primero el nombre o descripción en español para poder traducir", "err");
+            return;
+        }
+
+        showToast("Traduciendo con IA...", "info");
+
+        async function translateText(text, fromLang, toLang) {
+            if (!text) return "";
+            try {
+                const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${fromLang}|${toLang}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.responseData && data.responseData.translatedText) {
+                        return data.responseData.translatedText;
+                    }
+                }
+            } catch (e) {
+                console.error("Error al traducir texto:", e);
+            }
+            return text;
+        }
+
+        try {
+            const [
+                enName, enCat, enDesc, enHist, enMaridaje,
+                ptName, ptCat, ptDesc, ptHist, ptMaridaje
+            ] = await Promise.all([
+                translateText(esNombre, 'es', 'en'),
+                translateText(esCat, 'es', 'en'),
+                translateText(esDesc, 'es', 'en'),
+                translateText(esHist, 'es', 'en'),
+                translateText(esMaridaje, 'es', 'en'),
+
+                translateText(esNombre, 'es', 'pt'),
+                translateText(esCat, 'es', 'pt'),
+                translateText(esDesc, 'es', 'pt'),
+                translateText(esHist, 'es', 'pt'),
+                translateText(esMaridaje, 'es', 'pt')
+            ]);
+
+            if (enName) document.getElementById('nombre_en').value = enName;
+            if (enCat)  document.getElementById('categoria_en').value = enCat;
+            if (enDesc) document.getElementById('descripcion_en').value = enDesc;
+            if (enHist) document.getElementById('historia_en').value = enHist;
+            if (enMaridaje) document.getElementById('maridaje_en').value = enMaridaje;
+
+            if (ptName) document.getElementById('nombre_pt').value = ptName;
+            if (ptCat)  document.getElementById('categoria_pt').value = ptCat;
+            if (ptDesc) document.getElementById('descripcion_pt').value = ptDesc;
+            if (ptHist) document.getElementById('historia_pt').value = ptHist;
+            if (ptMaridaje) document.getElementById('maridaje_pt').value = ptMaridaje;
+
+            showToast("¡Traducciones automáticas generadas! 🌐", "ok");
+        } catch(e) {
+            showToast("Error en el servicio de traducción", "err");
+        }
+    }
+
+    // ===== FORMULARIO AGREGAR / EDITAR =====
+    function toggleForm() {
+        const f = document.getElementById('form');
+        f.style.display = f.style.display === 'block' ? 'none' : 'block';
+        if (f.style.display === 'block') limpiarForm();
+    }
+    function cancelForm() { document.getElementById('form').style.display = 'none'; limpiarForm(); }
+
+    function limpiarForm() {
+        ['editId','nombre','bodega','region','anio','precio','imagen','descripcion','historia','maridaje','categoria',
+         'nombre_en','categoria_en','descripcion_en','historia_en','maridaje_en',
+         'nombre_pt','categoria_pt','descripcion_pt','historia_pt','maridaje_pt'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = '';
+        });
+        document.getElementById('tipo').value = 'Tinto';
+        document.getElementById('preview').style.display = 'none';
+        document.getElementById('formTitle').textContent = 'Agregar Nuevo Vino';
+    }
+
+    function previewImage() {
+        const src = document.getElementById('imagen').value.trim();
+        const img = document.getElementById('preview');
+        if (src) { img.src = src; img.style.display = 'block'; }
+        else      { img.style.display = 'none'; }
+    }
+
+    function guardarFormulario() {
+        const nombre = document.getElementById('nombre').value.trim();
+        if (!nombre) { showToast("El nombre del vino es obligatorio","err"); return; }
+
+        const editId = document.getElementById('editId').value;
+        const newId  = editId || generateNextId();
+
+        const bodega      = document.getElementById('bodega').value.trim();
+        const region      = document.getElementById('region').value.trim();
+        const anio        = document.getElementById('anio').value.trim();
+        const tipo        = document.getElementById('tipo').value;
+        const categoria   = document.getElementById('categoria').value.trim() || 'Tintos Premium';
+        const precio      = sanitizePrice(document.getElementById('precio').value);
+        const imagen      = document.getElementById('imagen').value.trim();
+        const descripcion = document.getElementById('descripcion').value.trim();
+        const historia    = document.getElementById('historia').value.trim();
+        const maridaje    = document.getElementById('maridaje').value.trim();
+
+        const vino = {
+            id: newId,
+            nombre,
+            bodega,
+            region,
+            anio,
+            tipo,
+            precio,
+            imagen,
+            descripcion,
+            historia,
+            maridaje,
+            categoria
+        };
+
+        // Traducciones EN
+        const vinoEN = {
+            id: newId,
+            nombre:      document.getElementById('nombre_en').value.trim() || nombre,
+            bodega:      bodega,
+            region:      region,
+            anio:        anio,
+            tipo:        tipo,
+            precio:      precio,
+            imagen:      imagen,
+            descripcion: document.getElementById('descripcion_en').value.trim() || descripcion,
+            historia:    document.getElementById('historia_en').value.trim() || historia,
+            maridaje:    document.getElementById('maridaje_en').value.trim() || maridaje,
+            categoria:   document.getElementById('categoria_en').value.trim() || categoria
+        };
+
+        // Traducciones PT
+        const vinoPT = {
+            id: newId,
+            nombre:      document.getElementById('nombre_pt').value.trim() || nombre,
+            bodega:      bodega,
+            region:      region,
+            anio:        anio,
+            tipo:        tipo,
+            precio:      precio,
+            imagen:      imagen,
+            descripcion: document.getElementById('descripcion_pt').value.trim() || descripcion,
+            historia:    document.getElementById('historia_pt').value.trim() || historia,
+            maridaje:    document.getElementById('maridaje_pt').value.trim() || maridaje,
+            categoria:   document.getElementById('categoria_pt').value.trim() || categoria
+        };
+
+        if (editId) {
+            const idx = vinos.findIndex(v => v.id === editId);
+            if (idx !== -1) vinos[idx] = vino;
+
+            const idxEN = vinosEN.findIndex(v => v.id === editId);
+            if (idxEN !== -1) vinosEN[idxEN] = vinoEN;
+            else vinosEN.push(vinoEN);
+
+            const idxPT = vinosPT.findIndex(v => v.id === editId);
+            if (idxPT !== -1) vinosPT[idxPT] = vinoPT;
+            else vinosPT.push(vinoPT);
+
+            showToast(`✅ "${nombre}" actualizado en la lista`, "ok");
+        } else {
+            vinos.push(vino);
+            vinosEN.push(vinoEN);
+            vinosPT.push(vinoPT);
+            showToast(`✅ "${nombre}" agregado a la lista`, "ok");
+        }
+
+        render(vinos);
+        cancelForm();
+    }
+
+    function editarVino(id) {
+        const v = vinos.find(x => x.id === id);
+        if (!v) return;
+        document.getElementById('editId').value      = v.id;
+        document.getElementById('nombre').value      = v.nombre || '';
+        document.getElementById('bodega').value      = v.bodega || '';
+        document.getElementById('region').value      = v.region || '';
+        document.getElementById('anio').value        = v.anio || '';
+        document.getElementById('tipo').value        = v.tipo || 'Tinto';
+        document.getElementById('categoria').value   = v.categoria || '';
+        document.getElementById('precio').value      = v.precio || '';
+        document.getElementById('imagen').value      = v.imagen || '';
+        document.getElementById('descripcion').value = v.descripcion || '';
+        document.getElementById('historia').value    = v.historia || '';
+        document.getElementById('maridaje').value    = v.maridaje || '';
+
+        // Cargar traducciones si existen
+        const vEN = vinosEN.find(x => x.id === id);
+        document.getElementById('nombre_en').value      = vEN ? (vEN.nombre || vEN.name || '') : '';
+        document.getElementById('categoria_en').value   = vEN ? (vEN.categoria || vEN.category || '') : '';
+        document.getElementById('descripcion_en').value = vEN ? (vEN.descripcion || vEN.description || '') : '';
+        document.getElementById('historia_en').value    = vEN ? (vEN.historia || vEN.history || '') : '';
+        document.getElementById('maridaje_en').value    = vEN ? (vEN.maridaje || vEN.pairing || '') : '';
+
+        const vPT = vinosPT.find(x => x.id === id);
+        document.getElementById('nombre_pt').value      = vPT ? (vPT.nombre || vPT.nome || '') : '';
+        document.getElementById('categoria_pt').value   = vPT ? (vPT.categoria || '') : '';
+        document.getElementById('descripcion_pt').value = vPT ? (vPT.descripcion || vPT.descricao || '') : '';
+        document.getElementById('historia_pt').value    = vPT ? (vPT.historia || '') : '';
+        document.getElementById('maridaje_pt').value    = vPT ? (vPT.maridaje || vPT.harmonizacao || '') : '';
+
+        previewImage();
+        document.getElementById('formTitle').textContent = `Editando: ${v.nombre}`;
+        document.getElementById('form').style.display = 'block';
+        document.getElementById('form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ===== FILTRO BÚSQUEDA =====
+    function filterVinos() {
+        const q = document.getElementById('searchAdmin').value.toLowerCase().trim();
+        if (!q) { render(vinos); return; }
+        render(vinos.filter(v =>
+            (v.nombre||'').toLowerCase().includes(q) ||
+            (v.bodega||'').toLowerCase().includes(q) ||
+            (v.categoria||'').toLowerCase().includes(q) ||
+            (v.tipo||'').toLowerCase().includes(q) ||
+            (v.region||'').toLowerCase().includes(q)
+        ));
+    }
+
+    // ===== GUARDAR EN GITHUB (3 IDIOMAS) =====
+    async function guardarTodo() {
+        if (guardando) return;
+        recogerDatosDeTabla();
+        const token = getToken();
+        if (!token) { showToast("Necesitás un Token de GitHub para guardar en la nube","err"); return; }
+
+        guardando = true;
+        mostrarLoading(); bloquearUI();
+
+        // Respaldo local automático
+        try {
+            const blob = new Blob([JSON.stringify(vinos, null, 2)], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `vinos_backup_${new Date().toISOString().slice(0,10)}.json`;
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        } catch(e) {
+            console.error("Error backup:", e);
+        }
+
+        try {
+            // Sincronizar listas EN y PT con precios y datos maestros
+            const syncedEN = vinos.map(master => {
+                const tr = vinosEN.find(x => x.id === master.id) || {};
+                return {
+                    id:          master.id,
+                    nombre:      tr.nombre || tr.name || master.nombre,
+                    bodega:      master.bodega,
+                    region:      tr.region || master.region,
+                    anio:        master.anio,
+                    tipo:        master.tipo,
+                    precio:      sanitizePrice(master.precio),
+                    imagen:      master.imagen,
+                    descripcion: tr.descripcion || tr.description || master.descripcion,
+                    historia:    tr.historia || tr.history || master.historia,
+                    maridaje:    tr.maridaje || tr.pairing || master.maridaje,
+                    categoria:   tr.categoria || tr.category || master.categoria
+                };
+            });
+
+            const syncedPT = vinos.map(master => {
+                const tr = vinosPT.find(x => x.id === master.id) || {};
+                return {
+                    id:          master.id,
+                    nombre:      tr.nombre || tr.nome || master.nombre,
+                    bodega:      master.bodega,
+                    region:      tr.region || master.region,
+                    anio:        master.anio,
+                    tipo:        master.tipo,
+                    precio:      sanitizePrice(master.precio),
+                    imagen:      master.imagen,
+                    descripcion: tr.descripcion || tr.descricao || master.descripcion,
+                    historia:    tr.historia || master.historia,
+                    maridaje:    tr.maridaje || tr.harmonizacao || master.maridaje,
+                    categoria:   tr.categoria || master.categoria
+                };
+            });
+
+            await subirJSON(MAIN_JSON, JSON.stringify(vinos, null, 2), token, "Actualización Carta de Vinos (Español)");
+            await subirJSON(EN_JSON, JSON.stringify(syncedEN, null, 2), token, "Sincronización Carta de Vinos (Inglés)");
+            await subirJSON(PT_JSON, JSON.stringify(syncedPT, null, 2), token, "Sincronización Carta de Vinos (Portugués)");
+
+            showToast("✨ ¡Carta de vinos sincronizada en 3 idiomas en GitHub!","ok");
+        } catch(e) {
+            console.error(e);
+            showToast("Error al guardar en GitHub: " + e.message, "err");
+        } finally {
+            guardando = false;
+            ocultarLoading(); desbloquearUI();
+        }
+    }
+
+    async function subirJSON(filename, content, token, commitMsg) {
+        const apiUrl = `https://api.github.com/repos/${USERNAME}/${REPO}/contents/${filename}`;
+        let sha = null;
+        try {
+            const get = await fetch(apiUrl, { headers: { Authorization: `token ${token}` } });
+            if (get.ok) { const d = await get.json(); sha = d.sha; }
+        } catch {}
+
+        const body = {
+            message: commitMsg,
+            content: btoa(unescape(encodeURIComponent(content))),
+            branch:  BRANCH
+        };
+        if (sha) body.sha = sha;
+
+        const put = await fetch(apiUrl, {
+            method: 'PUT',
+            headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        if (!put.ok) {
+            const err = await put.json();
+            throw new Error(err.message || 'Error al subir archivo');
+        }
+        return put;
+    }
+
+    // ===== NAVEGACIÓN =====
+    function irIndex()    { window.open('index.html', '_blank'); }
+    function irWhatsApp() { window.open('https://wa.me/?text=Necesito%20soporte%20para%20Cava%20de%20Vinos', '_blank'); }
+
+    // ===== INICIO =====
+    loadVinos();
+    const tSaved = getToken();
+    if (tSaved) validarToken();
+</script>
+
+</body>
+</html>
