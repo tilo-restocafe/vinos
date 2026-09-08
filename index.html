@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cava de Vinos</title>
+    <meta name="description"
+        content="Carta digital de vinos con fichas de catador. Descubrí historia, notas de cata y maridaje de cada vino.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6b1a2e;
+            /* Borgoña profundo */
+            --gold: #c9a84c;
+            /* Oro añejo */
+            --gold-light: #e4c97e;
+            /* Oro claro */
+            --dark: #1a0a0f;
+            /* Negro vino */
+            --dark2: #2d0e1a;
+            /* Vino oscuro */
+            --cream: #f5ede0;
+            /* Crema pergamino */
+            --glass: rgba(26, 10, 15, 0.82);
+            --glass-b: rgba(201, 168, 76, 0.25);
+            --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.35);
+            --shadow-md: 0 10px 32px rgba(0, 0, 0, 0.5);
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.7);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: url('img/fondo_vinos.png') repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            padding-top: 52px;
+            color: var(--cream);
+            text-align: center;
+            scroll-behavior: smooth;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 5, 10, 0.72);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* ========== TELEPROMPTER ========== */
+        #teleprompter {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(26, 10, 15, 0.97);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--gold-light);
+            z-index: 2000;
+            padding: 13px 16px;
+            font-family: 'Playfair Display', serif;
+            font-size: 14px;
+            font-style: italic;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.35);
+            cursor: pointer;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        #tele-wrapper {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+        }
+
+        #tele-track {
+            display: inline-block;
+            white-space: nowrap;
+            will-change: transform;
+        }
+
+        @keyframes scrollTele {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ========== MODAL TELEPROMPTER ========== */
+        #modalTele {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 5, 10, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-tele-content {
+            background: linear-gradient(145deg, #2d0e1a, #1a0a0f);
+            border: 1px solid var(--glass-b);
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border-radius: 24px;
+            position: relative;
+            padding: 32px;
+            box-shadow: var(--shadow-lg);
+            animation: zoomIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-align: left;
+        }
+
+        /* ========== MODAL VINO (FICHA DE CATADOR) ========== */
+        #modalVino {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 4, 8, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 8888;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        #modalVino.open {
+            display: flex;
+        }
+
+        .modal-vino-inner {
+            background: linear-gradient(160deg, #2d0e1a 0%, #1a0a0f 60%);
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            width: 100%;
+            max-width: 620px;
+            border-radius: 28px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            animation: zoomIn 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+            margin: auto;
+        }
+
+        .mv-img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .mv-img-placeholder {
+            width: 100%;
+            height: 260px;
+            background: linear-gradient(135deg, #3a0f20, #1a0a0f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+        }
+
+        .mv-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: var(--primary);
+            color: var(--gold-light);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(201, 168, 76, 0.4);
+        }
+
+        .mv-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: rgba(0, 0, 0, 0.6);
+            color: var(--cream);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mv-close:hover {
+            background: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .mv-body {
+            padding: 28px 28px 32px;
+        }
+
+        .mv-tipo-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .mv-chip {
+            background: rgba(201, 168, 76, 0.12);
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            color: var(--gold-light);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .mv-nombre {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--cream);
+            margin: 0 0 4px;
+            line-height: 1.2;
+        }
+
+        .mv-bodega {
+            font-size: 13px;
+            color: var(--gold);
+            font-weight: 600;
+            margin: 0 0 20px;
+            letter-spacing: 0.3px;
+        }
+
+        .mv-divider {
+            border: none;
+            border-top: 1px solid rgba(201, 168, 76, 0.18);
+            margin: 18px 0;
+        }
+
+        .mv-section-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gold);
+            margin: 0 0 7px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .mv-section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(201, 168, 76, 0.2);
+        }
+
+        .mv-text {
+            font-size: 14px;
+            color: rgba(245, 237, 224, 0.85);
+            line-height: 1.7;
+            margin: 0 0 18px;
+        }
+
+        .mv-maridaje-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .mv-maridaje-item {
+            background: rgba(107, 26, 46, 0.35);
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            color: var(--cream);
+            font-size: 12px;
+            padding: 5px 12px;
+            border-radius: 14px;
+        }
+
+        .mv-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 14px;
+            border-top: 1px solid rgba(201, 168, 76, 0.15);
+        }
+
+        .mv-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .mv-region {
+            font-size: 12px;
+            color: rgba(245, 237, 224, 0.5);
+            text-align: right;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* ========== HEADER ========== */
+        header {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(15, 5, 10, 0.2), rgba(15, 5, 10, 0.7));
+        }
+
+        .banner {
+            margin: 24px 0 6px;
+            font-family: 'Playfair Display', serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--cream);
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+        }
+
+        .banner span {
+            color: var(--gold);
+        }
+
+        /* ========== SELECTOR DE IDIOMA ========== */
+        .lang-selector-container {
+            display: flex;
+            justify-content: center;
+            margin: 10px auto 14px;
+            padding: 0 16px;
+        }
+
+        .lang-selector {
+            display: inline-flex;
+            gap: 8px;
+            background: rgba(26, 10, 15, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(201, 168, 76, 0.25);
+            padding: 5px 8px;
+            border-radius: 22px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: rgba(245, 237, 224, 0.72);
+            padding: 6px 14px;
+            border-radius: 16px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .lang-btn:hover {
+            color: var(--gold-light);
+            background: rgba(201, 168, 76, 0.12);
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, var(--primary), #8a2240);
+            color: var(--gold-light);
+            border: 1px solid rgba(201, 168, 76, 0.35);
+            box-shadow: 0 2px 12px rgba(107, 26, 46, 0.5);
+        }
+
+        /* ========== BUSCADOR ========== */
+        .search-box {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 16px auto 20px;
+            max-width: 520px;
+            width: 90%;
+            background: rgba(26, 10, 15, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(201, 168, 76, 0.25);
+            padding: 6px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .search-box input {
+            flex: 1;
+            min-width: 0;
+            border: none;
+            background: transparent;
+            padding: 11px 14px;
+            font-size: 15px;
+            color: var(--cream);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 400;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(245, 237, 224, 0.4);
+        }
+
+        .search-box input:focus {
+            outline: none;
+        }
+
+        .search-box button {
+            background: var(--primary);
+            color: var(--gold-light);
+            border: none;
+            border-radius: 12px;
+            padding: 10px 20px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .search-box button:hover {
+            background: #8a2240;
+            transform: scale(1.02);
+        }
+
+        #btnVoice {
+            background: rgba(201, 168, 76, 0.1);
+            color: var(--gold-light);
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 14px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        #btnVoice:hover {
+            background: rgba(201, 168, 76, 0.2);
+            transform: scale(1.05);
+        }
+
+        @keyframes voicePulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.5);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(201, 168, 76, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(201, 168, 76, 0);
+            }
+        }
+
+        .recording {
+            animation: voicePulse 1.5s infinite;
+            background: var(--primary) !important;
+            color: white !important;
+        }
+
+        /* ========== CATEGORÍAS ========== */
+        #category-buttons {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 12px 18px;
+            gap: 10px;
+            position: sticky;
+            top: 45px;
+            background: rgba(20, 7, 13, 0.9);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.12);
+            margin: 0 0 28px;
+        }
+
+        #category-buttons::-webkit-scrollbar {
+            display: none;
+        }
+
+        #category-buttons button {
+            flex: 0 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(245, 237, 224, 0.7);
+            border: 1px solid rgba(201, 168, 76, 0.15);
+            border-radius: 20px;
+            padding: 7px 20px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        #category-buttons button:hover {
+            background: rgba(201, 168, 76, 0.12);
+            border-color: rgba(201, 168, 76, 0.4);
+            color: var(--gold-light);
+            transform: translateY(-1px);
+        }
+
+        #category-buttons button.active-cat {
+            background: linear-gradient(135deg, var(--primary), #8a2240);
+            color: var(--gold-light);
+            border-color: rgba(201, 168, 76, 0.4);
+            box-shadow: 0 4px 14px rgba(107, 26, 46, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* ========== GRILLA DE VINOS ========== */
+        #product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            padding: 16px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 300px;
+        }
+
+        .item {
+            background: linear-gradient(160deg, rgba(45, 14, 26, 0.95), rgba(26, 10, 15, 0.98));
+            border: 1px solid rgba(201, 168, 76, 0.18);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(201, 168, 76, 0.4);
+        }
+
+        .item-image-wrapper {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #2d0e1a, #1a0a0f);
+        }
+
+        .item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .item:hover img {
+            transform: scale(1.07);
+        }
+
+        .item-img-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            background: linear-gradient(135deg, #3a0f20, #1a0a0f);
+        }
+
+        .item-tipo-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 4px 11px;
+            border-radius: 20px;
+            border: 1px solid rgba(201, 168, 76, 0.4);
+        }
+
+        .tipo-tinto {
+            background: rgba(107, 26, 46, 0.85);
+            color: #f8d0d8;
+        }
+
+        .tipo-blanco {
+            background: rgba(60, 50, 10, 0.85);
+            color: #f5e8a0;
+        }
+
+        .tipo-rosado {
+            background: rgba(120, 30, 70, 0.85);
+            color: #ffc0cb;
+        }
+
+        .tipo-espumante {
+            background: rgba(20, 50, 80, 0.85);
+            color: #b0d8ff;
+        }
+
+        .tipo-default {
+            background: rgba(40, 40, 40, 0.85);
+            color: #ddd;
+        }
+
+        .item-anio-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(201, 168, 76, 0.85);
+            color: #1a0a0f;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 12px;
+        }
+
+        .item-content {
+            padding: 18px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .item h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 19px;
+            color: var(--cream);
+            margin: 0 0 3px;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+
+        .item-bodega {
+            font-size: 12px;
+            color: var(--gold);
+            font-weight: 600;
+            margin: 0 0 10px;
+        }
+
+        .item p {
+            font-size: 13px;
+            color: rgba(245, 237, 224, 0.72);
+            line-height: 1.6;
+            margin: 0 0 14px;
+            flex-grow: 1;
+        }
+
+        .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid rgba(201, 168, 76, 0.12);
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--gold);
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .ver-ficha-btn {
+            background: rgba(201, 168, 76, 0.12);
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            color: var(--gold-light);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            padding: 6px 14px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .ver-ficha-btn:hover {
+            background: rgba(201, 168, 76, 0.22);
+            border-color: var(--gold);
+        }
+
+        /* ========== BOTÓN SUBIR ========== */
+        #btnUp {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--primary);
+            color: var(--gold-light);
+            border: 1px solid rgba(201, 168, 76, 0.4);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: none;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(107, 26, 46, 0.5);
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        #btnUp:hover {
+            background: #8a2240;
+            transform: scale(1.1);
+        }
+
+        /* ========== VOICE OVERLAY ========== */
+        #voice-overlay {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(20, 7, 13, 0.97);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 2px solid var(--gold);
+            z-index: 3000;
+            padding: 28px 20px calc(28px + env(safe-area-inset-bottom));
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0.3s ease;
+            transform: translateY(100%);
+            opacity: 0;
+            visibility: hidden;
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+        }
+
+        #voice-overlay.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .voice-overlay-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .voice-mic-icon {
+            font-size: 30px;
+            background: linear-gradient(135deg, var(--primary), #8a2240);
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 0 24px rgba(201, 168, 76, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .voice-glow-ring {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: transparent;
+            border: 2px solid var(--gold);
+            z-index: 1;
+            animation: rippleVoice 1.8s infinite ease-out;
+        }
+
+        @keyframes rippleVoice {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.7);
+                opacity: 0;
+            }
+        }
+
+        #voice-status-text {
+            font-family: 'Playfair Display', serif;
+            color: var(--cream);
+            font-size: 20px;
+            margin: 14px 0 4px;
+            font-weight: 600;
+        }
+
+        #voice-sub-text {
+            color: rgba(245, 237, 224, 0.6);
+            font-size: 13px;
+            margin: 0 0 18px;
+        }
+
+        .voice-waves {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            height: 38px;
+            margin-bottom: 14px;
+        }
+
+        .voice-wave {
+            width: 4px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 4px;
+            animation: soundBounce 1.2s infinite ease-in-out alternate;
+        }
+
+        .voice-wave.bar-1 {
+            animation-delay: 0.1s;
+        }
+
+        .voice-wave.bar-2 {
+            animation-delay: 0.3s;
+        }
+
+        .voice-wave.bar-3 {
+            animation-delay: 0.6s;
+            height: 12px;
+        }
+
+        .voice-wave.bar-4 {
+            animation-delay: 0.2s;
+        }
+
+        .voice-wave.bar-5 {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes soundBounce {
+            0% {
+                height: 8px;
+            }
+
+            100% {
+                height: 36px;
+                background: var(--gold-light);
+            }
+        }
+
+        #btn-cancel-voice {
+            position: absolute;
+            top: -10px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: var(--cream);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        #btn-cancel-voice:hover {
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        /* ========== MODAL CLOSE GENERIC ========== */
+        .modal-close-btn {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: rgba(201, 168, 76, 0.1);
+            color: var(--gold-light);
+            border: 1px solid rgba(201, 168, 76, 0.25);
+            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close-btn:hover {
+            background: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media(max-width:600px) {
+            .banner {
+                font-size: 24px;
+            }
+
+            .lang-btn {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
+
+            #product-list {
+                grid-template-columns: 1fr;
+                padding: 10px;
+                gap: 16px;
+            }
+
+            .item-image-wrapper {
+                height: 175px;
+            }
+
+            .mv-body {
+                padding: 20px 18px 24px;
+            }
+
+            .mv-nombre {
+                font-size: 22px;
+            }
+        }
+
+        @media(max-width:480px) {
+            .search-box {
+                width: 92%;
+                padding: 4px;
+                gap: 5px;
+            }
+
+            .search-box input {
+                padding: 10px 10px;
+                font-size: 15px;
+            }
+
+            .search-box button {
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TELEPROMPTER SOMMELIER -->
+    <div id="teleprompter" onclick="abrirModalTele()">
+        <div id="tele-wrapper">
+            <div id="tele-track">Cargando sugerencias del sommelier...</div>
+        </div>
+    </div>
+
+    <!-- MODAL TELEPROMPTER -->
+    <div id="modalTele">
+        <div class="modal-tele-content">
+            <button class="modal-close-btn" onclick="event.stopPropagation(); cerrarModalTele()">✕</button>
+            <h2 id="modal-tele-title"
+                style="font-family:'Playfair Display',serif; color:var(--gold); margin-top:0; font-size:22px; border-bottom: 1px solid rgba(201,168,76,0.3); padding-bottom:10px; margin-bottom:16px;">
+                🍷 Sommelier Digital
+            </h2>
+            <div id="modal-tele-text" style="line-height:1.7; color:rgba(245,237,224,0.85);"></div>
+        </div>
+    </div>
+
+    <!-- MODAL FICHA DE CATADOR -->
+    <div id="modalVino">
+        <div class="modal-vino-inner" id="modalVinoInner">
+            <!-- Se llena dinámicamente -->
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <img src="img/header_cava1.png" alt="Cava de Vinos" onerror="this.style.display='none'">
+    </header>
+
+    <div class="banner" id="banner-text">🍷 <span>Cava de Vinos</span></div>
+
+    <!-- SELECTOR DE IDIOMA ARRIBA -->
+    <div class="lang-selector-container">
+        <div class="lang-selector">
+            <button class="lang-btn active" id="btn-lang-es" onclick="cambiarIdioma('es')">🇪🇸 Español</button>
+            <button class="lang-btn" id="btn-lang-en" onclick="cambiarIdioma('en')">🇬🇧 English</button>
+            <button class="lang-btn" id="btn-lang-pt" onclick="cambiarIdioma('pt')">🇧🇷 Português</button>
+        </div>
+    </div>
+
+    <!-- BUSCADOR -->
+    <div class="search-box">
+        <input id="search" type="text" placeholder="Buscar vino, bodega, región...">
+        <button id="btnSearch">Buscar</button>
+        <button id="btnVoice" title="Búsqueda por voz">🎙️</button>
+    </div>
+
+    <!-- CATEGORÍAS -->
+    <div id="category-buttons"></div>
+
+    <!-- GRILLA DE VINOS -->
+    <div id="product-list"></div>
+
+    <!-- BOTÓN SUBIR -->
+    <button id="btnUp">⬆</button>
+
+    <!-- VOICE OVERLAY -->
+    <div id="voice-overlay">
+        <div class="voice-overlay-content">
+            <div class="voice-glow-ring"></div>
+            <div class="voice-mic-icon">🎙️</div>
+            <h3 id="voice-status-text">Escuchando...</h3>
+            <p id="voice-sub-text">Diga el nombre del vino o bodega</p>
+            <div class="voice-waves">
+                <div class="voice-wave bar-1"></div>
+                <div class="voice-wave bar-2"></div>
+                <div class="voice-wave bar-3"></div>
+                <div class="voice-wave bar-4"></div>
+                <div class="voice-wave bar-5"></div>
+            </div>
+            <button id="btn-cancel-voice" title="Cancelar">✕</button>
+        </div>
+    </div>
+
+    <script>
+        const NOMBRE_LOCAL = "Cava de Vinos VAL RIO";
+
+        // Detección dinámica de GitHub
+        const host = window.location.hostname;
+        const pathParts = window.location.pathname.split("/");
+        let USER = 'tilo-restocafe';
+        let REPO = 'cava-de-vinos';
+        if (host.includes(".github.io")) {
+            USER = host.split(".")[0];
+            REPO = pathParts[1] || "";
+        }
+        const isLocal = host === "localhost" || host === "127.0.0.1" || window.location.protocol === "file:";
+
+        // ========== GESTIÓN MULTI-IDIOMA ==========
+        let currentLang = localStorage.getItem('cava_lang') || 'es';
+
+        const UI_TEXTS = {
+            es: {
+                searchPlaceholder: "Buscar vino, bodega, región...",
+                searchBtn: "Buscar",
+                todosCat: "Todos",
+                verFicha: "📖 Ver ficha",
+                sommelierTitle: "🍷 Sommelier Digital",
+                sommelierSub: "Selección y sugerencias de hoy",
+                notasCata: "🍇 Notas de Cata",
+                historia: "📖 Historia",
+                maridaje: "🍽️ Maridaje Recomendado",
+                sinResultados: "No se encontraron vinos.",
+                saludoDia: "☀️ Bienvenidos",
+                saludoTarde: "🌤️ Buenas tardes",
+                saludoNoche: "🌙 Buenas noches",
+                vozEscuchando: "Escuchando...",
+                vozSub: "Diga el nombre del vino o bodega",
+                vozLang: "es-AR"
+            },
+            en: {
+                searchPlaceholder: "Search wine, winery, region...",
+                searchBtn: "Search",
+                todosCat: "All",
+                verFicha: "📖 View details",
+                sommelierTitle: "🍷 Digital Sommelier",
+                sommelierSub: "Today's selection & recommendations",
+                notasCata: "🍇 Tasting Notes",
+                historia: "📖 History",
+                maridaje: "🍽️ Recommended Pairing",
+                sinResultados: "No wines found.",
+                saludoDia: "☀️ Welcome",
+                saludoTarde: "🌤️ Good afternoon",
+                saludoNoche: "🌙 Good evening",
+                vozEscuchando: "Listening...",
+                vozSub: "Say the wine or winery name",
+                vozLang: "en-US"
+            },
+            pt: {
+                searchPlaceholder: "Buscar vinho, vinícola, região...",
+                searchBtn: "Buscar",
+                todosCat: "Todos",
+                verFicha: "📖 Ver ficha",
+                sommelierTitle: "🍷 Sommelier Digital",
+                sommelierSub: "Seleção e recomendações de hoje",
+                notasCata: "🍇 Notas de Degustação",
+                historia: "📖 História",
+                maridaje: "🍽️ Harmonização Recomendada",
+                sinResultados: "Nenhum vinho encontrado.",
+                saludoDia: "☀️ Bem-vindos",
+                saludoTarde: "🌤️ Boa tarde",
+                saludoNoche: "🌙 Boa noite",
+                vozEscuchando: "Ouvindo...",
+                vozSub: "Diga o nome do vinho ou vinícola",
+                vozLang: "pt-BR"
+            }
+        };
+
+        function getJsonFileName(lang) {
+            if (lang === 'en') return 'vinoing.json';
+            if (lang === 'pt') return 'vinoportu.json';
+            return 'vinos.json';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            document.title = NOMBRE_LOCAL;
+            document.getElementById('banner-text').innerHTML = `🍷 <span style="color:var(--gold)">${NOMBRE_LOCAL}</span>`;
+
+            const categoryContainer = document.getElementById('category-buttons');
+            const productList = document.getElementById('product-list');
+            const teleTrack = document.getElementById("tele-track");
+            let vinos = [];
+
+            function actualizarBotonesIdioma() {
+                ['es', 'en', 'pt'].forEach(lang => {
+                    const btn = document.getElementById(`btn-lang-${lang}`);
+                    if (btn) {
+                        if (lang === currentLang) btn.classList.add('active');
+                        else btn.classList.remove('active');
+                    }
+                });
+            }
+
+            function actualizarTextosUI() {
+                const t = UI_TEXTS[currentLang] || UI_TEXTS.es;
+                const sInput = document.getElementById('search');
+                if (sInput) sInput.placeholder = t.searchPlaceholder;
+                const sBtn = document.getElementById('btnSearch');
+                if (sBtn) sBtn.innerText = t.searchBtn;
+
+                const vStatus = document.getElementById('voice-status-text');
+                if (vStatus) vStatus.innerText = t.vozEscuchando;
+                const vSub = document.getElementById('voice-sub-text');
+                if (vSub) vSub.innerText = t.vozSub;
+
+                const modalTitle = document.getElementById('modal-tele-title');
+                if (modalTitle) modalTitle.innerText = t.sommelierTitle;
+            }
+
+            window.cambiarIdioma = function (lang) {
+                if (lang === currentLang) return;
+                currentLang = lang;
+                localStorage.setItem('cava_lang', lang);
+                actualizarBotonesIdioma();
+                actualizarTextosUI();
+                load();
+            };
+
+            // ========== TIPO → CLASE CSS ==========
+            function tipoBadgeClass(tipo) {
+                const t = (tipo || '').toLowerCase();
+                if (t.includes('tinto') || t.includes('red')) return 'tipo-tinto';
+                if (t.includes('blanco') || t.includes('white') || t.includes('branco')) return 'tipo-blanco';
+                if (t.includes('rosado') || t.includes('rosé') || t.includes('rose')) return 'tipo-rosado';
+                if (t.includes('espumante') || t.includes('sparkling') || t.includes('champagne')) return 'tipo-espumante';
+                return 'tipo-default';
+            }
+
+            // ========== MODAL FICHA DE CATADOR ==========
+            function abrirFicha(v) {
+                const modal = document.getElementById('modalVino');
+                const inner = document.getElementById('modalVinoInner');
+                const t = UI_TEXTS[currentLang] || UI_TEXTS.es;
+
+                const badgeClass = tipoBadgeClass(v.tipo);
+
+                // Parsear maridaje como chips
+                const maridajes = (v.maridaje || '').split(/[,\.]+/).map(s => s.trim()).filter(Boolean);
+                const maridajeChips = maridajes.map(m => `<span class="mv-maridaje-item">${m}</span>`).join('');
+
+                inner.innerHTML = `
+                    <div style="position:relative;">
+                        ${v.imagen
+                        ? `<img class="mv-img" src="${v.imagen}" alt="${v.nombre}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                               <div class="mv-img-placeholder" style="display:none;">🍷</div>`
+                        : `<div class="mv-img-placeholder">🍷</div>`
+                    }
+                        <span class="mv-badge ${badgeClass}">${v.tipo || 'Vino'}</span>
+                        <button class="mv-close" onclick="cerrarFicha()">✕</button>
+                    </div>
+                    <div class="mv-body">
+                        <div class="mv-tipo-row">
+                            ${v.anio ? `<span class="mv-chip">📅 ${v.anio}</span>` : ''}
+                            ${v.region ? `<span class="mv-chip">📍 ${v.region}</span>` : ''}
+                            ${v.categoria ? `<span class="mv-chip">🏷️ ${v.categoria}</span>` : ''}
+                        </div>
+                        <h2 class="mv-nombre">${v.nombre}</h2>
+                        <p class="mv-bodega">🏠 ${v.bodega || ''}</p>
+
+                        <div class="mv-section-label">${t.notasCata}</div>
+                        <p class="mv-text">${v.descripcion || ''}</p>
+
+                        ${v.historia ? `
+                        <hr class="mv-divider">
+                        <div class="mv-section-label">${t.historia}</div>
+                        <p class="mv-text">${v.historia}</p>
+                        ` : ''}
+
+                        ${v.maridaje ? `
+                        <hr class="mv-divider">
+                        <div class="mv-section-label">${t.maridaje}</div>
+                        <div class="mv-maridaje-grid">${maridajeChips}</div>
+                        ` : ''}
+
+                        <div class="mv-footer">
+                            <span class="mv-price">$${v.precio}</span>
+                            <span class="mv-region">${v.region || ''}<br><span style="color:var(--gold); font-size:11px;">${v.anio || ''}</span></span>
+                        </div>
+                    </div>
+                `;
+
+                modal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            window.cerrarFicha = function () {
+                document.getElementById('modalVino').classList.remove('open');
+                document.body.style.overflow = '';
+            };
+
+            document.getElementById('modalVino').addEventListener('click', function (e) {
+                if (e.target === this) cerrarFicha();
+            });
+
+            // ========== TELEPROMPTER ==========
+            window.abrirModalTele = function () {
+                const modal = document.getElementById('modalTele');
+                const contenido = document.getElementById('modal-tele-text');
+                const t = UI_TEXTS[currentLang] || UI_TEXTS.es;
+                const texto = teleTrack.innerText || "";
+                const partes = texto.split(" — ");
+                const sugerencias = partes[1] || texto;
+                const lista = sugerencias.split("✦").map(s => s.trim()).filter(Boolean);
+                contenido.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px; background:rgba(201,168,76,0.07); padding:12px 16px; border-radius:14px; border:1px solid rgba(201,168,76,0.2);">
+                        <span style="font-size:30px;">🍷</span>
+                        <div>
+                            <p style="font-weight:700; color:var(--gold); margin:0; font-size:15px;">${t.sommelierTitle}</p>
+                            <p style="font-size:11px; color:rgba(245,237,224,0.6); margin:0;">${t.sommelierSub}</p>
+                        </div>
+                    </div>
+                    <ul style="padding-left:18px; margin:0; color:rgba(245,237,224,0.85);">
+                        ${lista.map(s => `<li style="margin-bottom:10px; font-size:14px; line-height:1.6;">${s}</li>`).join('')}
+                    </ul>
+                `;
+                modal.style.display = 'flex';
+            };
+
+            window.cerrarModalTele = function () {
+                document.getElementById('modalTele').style.display = 'none';
+            };
+
+            document.getElementById('modalTele').addEventListener('click', function (e) {
+                if (e.target === this) cerrarModalTele();
+            });
+
+            // ========== CARGA DE SUGERENCIAS ==========
+            async function cargarTeleprompter() {
+                const t = UI_TEXTS[currentLang] || UI_TEXTS.es;
+                try {
+                    let url = `./sugerencias.json?t=${Date.now()}`;
+                    let res;
+                    if (!isLocal) {
+                        const ghUrl = `https://raw.githubusercontent.com/${USER}/${REPO}/main/sugerencias.json?t=${Date.now()}`;
+                        try {
+                            res = await fetch(ghUrl, { cache: "no-store" });
+                            if (!res.ok) throw new Error();
+                        } catch { res = await fetch(url, { cache: "no-store" }); }
+                    } else {
+                        res = await fetch(url, { cache: "no-store" });
+                    }
+                    const data = await res.json();
+                    const localName = NOMBRE_LOCAL || data.config?.nombreLocal || "Cava de Vinos";
+                    document.title = localName;
+
+                    const hora = new Date().getHours();
+                    const saludo = hora < 12 ? t.saludoDia : hora < 19 ? t.saludoTarde : t.saludoNoche;
+                    const sugs = data[currentLang] || data["es"] || [];
+                    const texto = saludo + " — " + sugs.join("   ✦   ");
+                    teleTrack.innerHTML = texto + "   ✦   " + texto;
+                    iniciarScroll();
+                } catch (e) {
+                    const hora = new Date().getHours();
+                    const saludo = hora < 12 ? t.saludoDia : hora < 19 ? t.saludoTarde : t.saludoNoche;
+                    teleTrack.textContent = `🍷 ${saludo} — ${NOMBRE_LOCAL}`;
+                    iniciarScroll();
+                }
+            }
+
+            function iniciarScroll() {
+                teleTrack.style.animation = "none";
+                setTimeout(() => {
+                    const vel = 52;
+                    const ancho = teleTrack.scrollWidth / 2;
+                    teleTrack.style.animation = `scrollTele ${ancho / vel}s linear infinite`;
+                }, 100);
+            }
+
+            // ========== CARGA DE VINOS MULTI-IDIOMA ==========
+            async function load() {
+                const targetJson = getJsonFileName(currentLang);
+                try {
+                    let url = `./${targetJson}?t=${Date.now()}`;
+                    let res;
+                    if (!isLocal) {
+                        const ghUrl = `https://raw.githubusercontent.com/${USER}/${REPO}/main/${targetJson}?t=${Date.now()}`;
+                        try {
+                            res = await fetch(ghUrl, { cache: "no-store" });
+                            if (!res.ok) throw new Error();
+                        } catch { res = await fetch(url, { cache: "no-store" }); }
+                    } else {
+                        res = await fetch(url, { cache: "no-store" });
+                    }
+
+                    if (!res.ok && targetJson !== 'vinos.json') {
+                        // Fallback a vinos.json si el archivo en otro idioma aún no existe
+                        const fallbackUrl = isLocal ? `./vinos.json?t=${Date.now()}` : `https://raw.githubusercontent.com/${USER}/${REPO}/main/vinos.json?t=${Date.now()}`;
+                        res = await fetch(fallbackUrl, { cache: "no-store" });
+                    }
+
+                    const data = await res.json();
+                    vinos = data.map(v => ({
+                        id: v.id || '',
+                        nombre: v.nombre || v.name || v.nome || 'Sin nombre',
+                        bodega: v.bodega || v.winery || '',
+                        region: v.region || '',
+                        anio: v.anio || v.year || v.ano || '',
+                        tipo: v.tipo || v.type || 'Tinto',
+                        precio: v.precio || v.price || v.preco || '0',
+                        imagen: v.imagen || v.image || v.imagem || '',
+                        descripcion: v.descripcion || v.description || v.descricao || '',
+                        historia: v.historia || v.history || '',
+                        maridaje: v.maridaje || v.pairing || v.harmonizacao || '',
+                        categoria: v.categoria || v.category || 'Vinos'
+                    }));
+                    renderCategorias();
+                    render(vinos);
+                    cargarTeleprompter();
+                } catch (e) {
+                    console.error("Error cargando vinos:", e);
+                    const t = UI_TEXTS[currentLang] || UI_TEXTS.es;
+                    productList.innerHTML = `
+                        <div style="grid-column:1/-1; padding:50px; text-align:center;">
+                            <span style="font-size:48px;">🍷</span>
+                            <p style="color:var(--gold); font-weight:600; margin-top:12px;">${t.sinResultados}</p>
+                        </div>`;
+                }
+            }
+
+            // ========== RENDER TARJETAS ==========
+            function render(arr) {
+                const t = UI_TEXTS[currentLang] || UI_TEXTS.es;
+                if (!arr.length) {
+                    productList.innerHTML = `
+                        <div style="grid-column:1/-1; padding:50px; text-align:center;">
+                            <span style="font-size:40px;">🔎</span>
+                            <p style="color:rgba(245,237,224,0.6); font-weight:500; margin-top:10px;">${t.sinResultados}</p>
+                        </div>`;
+                    return;
+                }
+
+                productList.innerHTML = arr.map((v, i) => {
+                    const badgeClass = tipoBadgeClass(v.tipo);
+                    const imgHtml = v.imagen
+                        ? `<img src="${v.imagen}" alt="${v.nombre}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">`
+                        : '';
+                    return `
+                    <div class="item" onclick="abrirFichaById('${v.id}')" data-id="${v.id}" style="animation: fadeUp 0.4s ease ${i * 0.05}s both;">
+                        <div class="item-image-wrapper">
+                            ${imgHtml}
+                            <div class="item-img-placeholder" style="${v.imagen ? 'display:none;' : ''}">🍷</div>
+                            <span class="item-tipo-badge ${badgeClass}">${v.tipo}</span>
+                            ${v.anio ? `<span class="item-anio-badge">${v.anio}</span>` : ''}
+                        </div>
+                        <div class="item-content">
+                            <h3>${v.nombre}</h3>
+                            <p class="item-bodega">${v.bodega}${v.region ? ' · ' + v.region : ''}</p>
+                            <p>${v.descripcion}</p>
+                            <div class="item-footer">
+                                <span class="price">$${v.precio}</span>
+                                <button class="ver-ficha-btn" onclick="event.stopPropagation(); abrirFichaById('${v.id}')">${t.verFicha}</button>
+                            </div>
+                        </div>
+                    </div>`;
+                }).join('');
+            }
+
+            window.abrirFichaById = function (id) {
+                const v = vinos.find(x => x.id === id);
+                if (v) abrirFicha(v);
+            };
+
+            // ========== CATEGORÍAS ==========
+            function renderCategorias() {
+                const t = UI_TEXTS[currentLang] || UI_TEXTS.es;
+                const cats = [t.todosCat, ...new Set(vinos.map(v => v.categoria).filter(Boolean))];
+                categoryContainer.innerHTML = cats.map((cat, idx) => `
+                    <button class="${idx === 0 ? 'active-cat' : ''}" data-cat="${cat}">${cat}</button>
+                `).join('');
+                document.querySelectorAll('#category-buttons button').forEach(btn => {
+                    btn.addEventListener('click', () => filtrarCat(btn.dataset.cat, btn));
+                });
+            }
+
+            window.filtrarCat = function (cat, btn) {
+                const t = UI_TEXTS[currentLang] || UI_TEXTS.es;
+                document.querySelectorAll('#category-buttons button').forEach(b => b.classList.remove('active-cat'));
+                btn.classList.add('active-cat');
+                const filtrados = (cat === t.todosCat || cat === "Todos" || cat === "All") ? vinos : vinos.filter(v => v.categoria === cat);
+                render(filtrados);
+                window.scrollTo({ top: productList.offsetTop - 120, behavior: "smooth" });
+            };
+
+            // ========== BUSCADOR ==========
+            function norm(txt) {
+                return (txt || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            }
+            function filtrar() {
+                const q = norm(document.getElementById('search').value);
+                render(vinos.filter(v =>
+                    norm(v.nombre).includes(q) ||
+                    norm(v.bodega).includes(q) ||
+                    norm(v.region).includes(q) ||
+                    norm(v.descripcion).includes(q) ||
+                    norm(v.categoria).includes(q)
+                ));
+            }
+            document.getElementById('btnSearch').onclick = () => { filtrar(); window.scrollTo({ top: productList.offsetTop - 120, behavior: "smooth" }); };
+            document.getElementById('search').addEventListener('keyup', e => { filtrar(); if (e.key === 'Enter') window.scrollTo({ top: productList.offsetTop - 120, behavior: "smooth" }); });
+
+            // ========== VOZ ==========
+            const btnVoice = document.getElementById('btnVoice');
+            const voiceOverlay = document.getElementById('voice-overlay');
+            const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (SR) {
+                const rec = new SR();
+                rec.continuous = false; rec.interimResults = false;
+                const close = () => { btnVoice.textContent = "🎙️"; btnVoice.classList.remove("recording"); voiceOverlay.classList.remove('active'); };
+                rec.onstart = () => { btnVoice.classList.add("recording"); voiceOverlay.classList.add('active'); };
+                rec.onend = close; rec.onerror = close;
+                rec.onresult = e => { document.getElementById('search').value = e.results[0][0].transcript; filtrar(); window.scrollTo({ top: productList.offsetTop - 120, behavior: "smooth" }); };
+                btnVoice.onclick = () => {
+                    const t = UI_TEXTS[currentLang] || UI_TEXTS.es;
+                    rec.lang = t.vozLang || 'es-AR';
+                    rec.start();
+                };
+                document.getElementById('btn-cancel-voice').onclick = () => { rec.abort(); close(); };
+            } else { btnVoice.style.display = 'none'; }
+
+            // ========== SCROLL UP ==========
+            window.addEventListener('scroll', () => {
+                document.getElementById('btnUp').style.display = window.scrollY > 400 ? "block" : "none";
+            });
+            document.getElementById('btnUp').onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
+            // ========== ANIMACIÓN FADE UP ==========
+            const style = document.createElement('style');
+            style.textContent = `@keyframes fadeUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }`;
+            document.head.appendChild(style);
+
+            // ========== LIVE PREVIEW ADMIN ==========
+            window.addEventListener('message', e => {
+                if (e.data && e.data.type === "updateSuggestions") {
+                    const sugs = e.data.sugerencias || [];
+                    const t = UI_TEXTS[currentLang] || UI_TEXTS.es;
+                    const hora = new Date().getHours();
+                    const saludo = hora < 12 ? t.saludoDia : hora < 19 ? t.saludoTarde : t.saludoNoche;
+                    const texto = saludo + " — " + sugs.join("   ✦   ");
+                    teleTrack.innerHTML = texto + "   ✦   " + texto;
+                    iniciarScroll();
+                }
+            });
+
+            actualizarBotonesIdioma();
+            actualizarTextosUI();
+            load();
+        });
+    </script>
+
+</body>
+
+</html>
