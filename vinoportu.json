@@ -1,17 +1,17 @@
 [
   {
     "id": "vino0710",
-    "nombre": "710- Álamos Malbec",
+    "nombre": "710- Alamos Malbec",
     "bodega": "Catena Zapata",
     "region": "Mendoza",
     "anio": "",
     "tipo": "Tinto",
     "precio": "27000",
-    "imagen": "",
-    "descripcion": "Malbec clásico y expresivo. Notas de ciruela negra, frutos del bosque, violetas y un toque sutil de roble.",
-    "historia": "Elaborado por la bodega Catena Zapata, Álamos rinde homenaje a los árboles que protegen los viñedos mendocinos de los vientos cordilleranos.",
-    "maridaje": "Carnes rojas asadas, empanadas criollas, pastas con salsa roja y quesos semiduros.",
-    "categoria": "Vinhos Tintos"
+    "imagen": "img/1788924563034_images__1__jpg.jpg",
+    "descripcion": "Malbec clássico e expressivo. Notas de ameixa preta, bagas, violetas e um toque subtil de carvalho.",
+    "historia": "Feito pela vinícola Catena Zapata, Alamos presta homenagem às árvores que protegem os vinhedos de Mendoza dos ventos de Cordilheira.",
+    "maridaje": "Carnes vermelhas assadas, criollo empanadas, massas com molho vermelho e queijos semiduros.",
+    "categoria": "Vinhos tintos"
   },
   {
     "id": "vino0711",
