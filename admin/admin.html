@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Mozo Digital</title>
+    <!-- Google Fonts for consistency -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <div class="layout">
+
+        <!-- PANEL IZQUIERDO -->
+        <div class="panel">
+
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #c48d49; padding-bottom: 8px; margin-bottom: 12px;">
+                <h2 style="margin: 0; border: none; padding: 0;">📝 Mozo Digital</h2>
+                <button id="btnLockAdmin" onclick="toggleAdminLock()"
+                    style="padding: 4px 10px; font-size: 12px; background: rgba(196, 141, 73, 0.15); border: 1px solid rgba(196, 141, 73, 0.4); border-radius: 6px; color: #f5eedc; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; font-family: 'Outfit', sans-serif; transition: all 0.2s;">🔒
+                    Acceso Propietario</button>
+            </div>
+
+            <!-- CONFIGURACIÓN DE TOKEN (EVITA EL PROMPT) -->
+            <div class="token-section" id="tokenControlGroup" style="display: none;">
+                <label>GitHub Token:</label>
+                <div class="token-row">
+                    <input type="password" id="token" placeholder="Pegar Token para editar">
+                    <button id="btnSaveToken" title="Guardar Token">💾</button>
+                    <button id="btnClearToken" title="Borrar Token" class="danger">🗑️</button>
+                </div>
+                <span id="tokenStatus">Validando...</span>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid rgba(196, 141, 73, 0.2); margin: 15px 0;">
+
+            <label>Nombre del local</label>
+            <input type="text" id="nombreLocal" placeholder="Ej: Tilo Café">
+
+            <label>Idioma</label>
+            <select id="idiomaSelect">
+                <option value="es">Español</option>
+                <option value="en">English</option>
+                <option value="pt">Português</option>
+            </select>
+
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; margin-bottom: 4px;">
+                <label style="margin: 0;">Sugerencias (una por línea)</label>
+                <button type="button" id="btnTraducir"
+                    style="background: rgba(196, 141, 73, 0.15); border: 1px solid rgba(196, 141, 73, 0.4); border-radius: 6px; color: #f5eedc; font-size: 11px; padding: 4px 10px; cursor: pointer; display: flex; align-items: center; gap: 4px; font-family: 'Outfit', sans-serif;">✨
+                    Traducir con IA</button>
+            </div>
+            <textarea id="editor" placeholder="Escribe aquí las sugerencias del día..."></textarea>
+
+            <div class="emoji-list">
+                <button type="button">☕</button>
+                <button type="button">🥐</button>
+                <button type="button">🍰</button>
+                <button type="button">🍔</button>
+                <button type="button">🍺</button>
+                <button type="button">🎉</button>
+                <button type="button">🔥</button>
+                <button type="button">❤️</button>
+                <button type="button">🍽️</button>
+                <button type="button">🧑‍🍳</button>
+                <button type="button">🥰</button>
+                <button type="button">✨</button>
+            </div>
+
+            <button id="guardar" class="btn-main">Guardar en la nube (GitHub)</button>
+            <small id="estado"></small>
+
+        </div>
+
+        <!-- PREVIEW DERECHO -->
+        <div class="preview">
+            <iframe src="https://tilo-restocafe.github.io/cartaaguero/"></iframe>
+        </div>
+
+    </div>
+
+    <script src="admin.js"></script>
+
+</body>
+
+</html>
