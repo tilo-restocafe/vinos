@@ -15,17 +15,17 @@
   },
   {
     "id": "vino0711",
-    "nombre": "711- Álamos Cabernet Sauvignon",
+    "nombre": "711- Alamos Cabernet Sauvignon",
     "bodega": "Catena Zapata",
     "region": "Mendoza",
     "anio": "",
     "tipo": "Tinto",
     "precio": "27000",
-    "imagen": "",
-    "descripcion": "Cabernet estructurado con aromas a grosella negra, pimiento asado, especias y suaves notas de vainilla.",
-    "historia": "La línea Álamos de Catena Zapata busca resaltar la tipicidad varietal de los viñedos de altura en Mendoza.",
-    "maridaje": "Ojo de bife, cordero a la brasa, estofados y quesos curados.",
-    "categoria": "Vinhos Tintos"
+    "imagen": "img/1788924636125_images__2__jpg.jpg",
+    "descripcion": "Cabernet estruturado com aromas de groselha preta, pimenta assada, especiarias e notas suaves de baunilha.",
+    "historia": "A linha Álamos de Catena Zapata procura destacar a tipicidade varietal dos vinhedos de alta altitude em Mendoza.",
+    "maridaje": "Bife, cordeiro grelhado, guisados e queijos curados.",
+    "categoria": "Vinhos tintos"
   },
   {
     "id": "vino0712",
