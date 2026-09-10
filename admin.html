@@ -441,6 +441,7 @@
     <!-- BOTONES DE ACCIÓN -->
     <div id="actionButtons">
         <button class="gold" id="guardarTodos" onclick="guardarTodo()">☁️ GUARDAR EN GITHUB (3 IDIOMAS)</button>
+        <button class="secondary" onclick="irMozoDigital()" style="background: linear-gradient(135deg, #422008, #63320c); color: #ffd685; border: 1px solid rgba(201,168,76,0.45);">📝 Mozo Digital (Sugerencias)</button>
         <button class="secondary" onclick="irIndex()">🍷 Ver Carta de Vinos</button>
         <button class="secondary" onclick="irWhatsApp()" style="background:#1a5c30; color:#a8f0b8;">📲 Soporte WhatsApp</button>
     </div>
@@ -1372,6 +1373,7 @@
     }
 
     // ===== NAVEGACIÓN =====
+    function irMozoDigital() { window.location.href = 'admin/admin.html'; }
     function irIndex()    { window.open('index.html', '_blank'); }
     function irWhatsApp() { 
         const numero = "5491123140119";
