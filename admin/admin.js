@@ -3,11 +3,11 @@ const pathParts = window.location.pathname.split("/");
 
 // Dynamic detection of GitHub URL parts
 let USER = "tilo-restocafe";
-let REPO = "cartaaguero";
+let REPO = "vinos";
 
 if (host.includes(".github.io")) {
     USER = host.split(".")[0];
-    REPO = pathParts[1] || "";
+    REPO = pathParts[1] || "vinos";
 }
 
 const FILE_PATH = "sugerencias.json";
@@ -320,7 +320,7 @@ async function guardarJSON() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                message: `Actualización de sugerencias de Ron (${idioma.toUpperCase()})`,
+                message: `Actualización de sugerencias Mozo Digital (${idioma.toUpperCase()})`,
                 content: contenidoBase64,
                 sha: sha,
                 branch: BRANCH
