@@ -162,16 +162,26 @@
         .form-group select { width: 100%; }
         .full-col { grid-column: 1 / -1; }
 
-        /* ===== ZONA DE ARRASTRAR FOTOS (DRAG & DROP) ===== */
+        /* ===== ZONA DE ARRASTRAR FOTOS (DRAG & DROP) Y PREVIEW ===== */
+        .image-upload-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: rgba(20, 7, 13, 0.6);
+            border: 1px solid rgba(201,168,76,0.25);
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 4px;
+        }
+
         .dropZone {
-            border: 2px dashed var(--gold);
+            border: 2px dashed rgba(201,168,76,0.6);
             padding: 20px 16px;
             text-align: center;
             border-radius: 14px;
             cursor: pointer;
             background: rgba(0, 0, 0, 0.35);
             color: var(--cream);
-            margin-top: 4px;
             transition: all 0.25s ease;
             display: flex;
             flex-direction: column;
@@ -193,15 +203,83 @@
             color: rgba(245, 237, 224, 0.65);
         }
 
-        .previewImg {
-            max-width: 140px;
-            max-height: 140px;
-            margin-top: 12px;
-            border-radius: 12px;
-            border: 2px solid var(--gold);
-            object-fit: cover;
+        .preview-box {
             display: none;
+            background: linear-gradient(145deg, rgba(45, 14, 26, 0.8), rgba(20, 7, 13, 0.95));
+            border: 1px solid rgba(201, 168, 76, 0.35);
+            border-radius: 14px;
+            padding: 16px;
+            align-items: center;
+            gap: 18px;
             box-shadow: var(--shadow-sm);
+            animation: fadeIn 0.3s ease;
+        }
+        .preview-box.has-image {
+            display: flex;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .preview-img-frame {
+            width: 120px;
+            height: 160px;
+            flex-shrink: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(107, 26, 46, 0.5) 0%, rgba(15, 5, 10, 0.95) 80%);
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            overflow: hidden;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+        }
+        .previewImg {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            object-position: center;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.7));
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        .preview-img-frame:hover .previewImg {
+            transform: scale(1.06);
+        }
+
+        .preview-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .preview-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--gold-light);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .preview-filename {
+            font-size: 12px;
+            color: rgba(245, 237, 224, 0.75);
+            word-break: break-all;
+            background: rgba(0,0,0,0.3);
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(201,168,76,0.15);
+            font-family: monospace;
+        }
+        .preview-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 4px;
         }
 
         /* ===== SECCIÓN FICHA DE CATADOR ===== */
@@ -312,10 +390,16 @@
         td textarea { resize: vertical; min-height: 42px; font-family: inherit; }
 
         img.mini {
-            max-width: 55px; max-height: 55px;
-            border-radius: 8px; object-fit: cover;
+            width: 48px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: contain;
+            object-position: center;
+            background: radial-gradient(circle at 50% 50%, rgba(107, 26, 46, 0.4) 0%, rgba(15, 5, 10, 0.9) 80%);
+            padding: 3px;
             box-shadow: var(--shadow-sm);
             border: 1px solid rgba(201,168,76,0.3);
+            display: inline-block;
         }
         .wine-emoji { font-size: 28px; }
 
@@ -495,23 +579,38 @@
             <div class="form-group full-col">
                 <label>📸 Foto de la Botella / Vino</label>
                 <input type="file" id="imagenFile" accept="image/*" style="display:none" onchange="handleFileSelect(event)">
-                <div id="dropZone" class="dropZone" 
-                     onclick="document.getElementById('imagenFile').click()"
-                     ondragover="handleDragOver(event)" 
-                     ondragleave="handleDragLeave(event)" 
-                     ondrop="handleDrop(event)">
-                    <span style="font-size:28px;">📷</span>
-                    <b id="dropText">Hacé clic aquí para elegir de tus carpetas o arrastrá tu foto desde tu computadora</b>
-                    <div class="drop-subtitle">Se subirá automáticamente a la carpeta <code>img/</code> en GitHub</div>
-                </div>
-                <div style="margin-top:8px; display:flex; gap:10px; align-items:center;">
-                    <div style="flex:1;">
-                        <label style="font-size:11px; color:rgba(245,237,224,0.6); margin-bottom:3px; display:block;">Ruta o URL de Imagen:</label>
+                
+                <div class="image-upload-wrapper">
+                    <!-- DROPZONE -->
+                    <div id="dropZone" class="dropZone" 
+                         onclick="document.getElementById('imagenFile').click()"
+                         ondragover="handleDragOver(event)" 
+                         ondragleave="handleDragLeave(event)" 
+                         ondrop="handleDrop(event)">
+                        <span style="font-size:32px;">📷</span>
+                        <b id="dropText">Hacé clic aquí para elegir de tus carpetas o arrastrá tu foto</b>
+                        <div class="drop-subtitle">Formatos: JPG, PNG, WEBP. Se optimiza y sincroniza en GitHub</div>
+                    </div>
+
+                    <!-- VISTA PREVIA ELEGANTE -->
+                    <div id="previewBox" class="preview-box">
+                        <div class="preview-img-frame">
+                            <img id="preview" class="previewImg" alt="Vista previa de botella">
+                        </div>
+                        <div class="preview-info">
+                            <div class="preview-title">✨ Vista Previa de la Botella</div>
+                            <div id="previewFilename" class="preview-filename">Sin foto</div>
+                            <div class="preview-actions">
+                                <button type="button" onclick="document.getElementById('imagenFile').click()" style="padding:6px 12px; font-size:12px; background:rgba(201,168,76,0.2); color:var(--gold-light); border:1px solid rgba(201,168,76,0.4);">🔄 Cambiar foto</button>
+                                <button type="button" onclick="quitarFoto()" class="danger" style="padding:6px 12px; font-size:12px;">🗑️ Quitar foto</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label style="font-size:11px; color:rgba(245,237,224,0.6); margin-bottom:3px; display:block;">Ruta o URL de Imagen (automática o manual):</label>
                         <input id="imagen" type="text" oninput="previewImage()" placeholder="img/mi-vino.jpg o https://..." style="width:100%;">
                     </div>
-                </div>
-                <div style="text-align:center;">
-                    <img id="preview" class="previewImg" alt="Vista previa">
                 </div>
             </div>
 
@@ -638,12 +737,20 @@
         }
         const step = parseInt(img.dataset.tryStep, 10);
         const fileName = (originalSrc || '').split('/').pop();
-        const folders = ["tintos", "blancos", "espumantes", "rosados", "vinos"];
         
-        if (step <= folders.length) {
-            const nextFolder = folders[step - 1];
+        if (step === 1 && originalSrc && !originalSrc.startsWith('data:')) {
+            // Intentar cargar directo desde GitHub Raw si falló la ruta relativa local
+            img.dataset.tryStep = "2";
+            const ghSrc = originalSrc.startsWith('http') ? originalSrc : `https://raw.githubusercontent.com/${USERNAME}/${REPO}/${BRANCH}/${originalSrc}`;
+            img.src = ghSrc;
+            return;
+        }
+
+        const folders = ["tintos", "blancos", "espumantes", "rosados", "vinos"];
+        const folderIndex = step - 2;
+        if (folderIndex < folders.length) {
             img.dataset.tryStep = (step + 1).toString();
-            img.src = `img/${nextFolder}/${fileName}`;
+            img.src = `img/${folders[folderIndex]}/${fileName}`;
         } else {
             img.outerHTML = '<span class="wine-emoji">🍷</span>';
         }
@@ -653,10 +760,10 @@
     const host = window.location.hostname;
     const pathParts = window.location.pathname.split("/");
     let USERNAME = "tilo-restocafe";
-    let REPO = "cava-de-vinos";
+    let REPO = "vinos";
     if (host.includes(".github.io")) {
         USERNAME = host.split(".")[0];
-        REPO = pathParts[1] || "";
+        REPO = pathParts[1] || "vinos";
     }
     document.getElementById('repoDisplay').innerText = `${USERNAME} / ${REPO}`;
 
@@ -775,17 +882,18 @@
 
     async function procesarYSubirImagen(file) {
         if (!file.type.startsWith("image/")) {
-            showToast("Por favor seleccioná un archivo de imagen válido", "err");
+            showToast("Por favor seleccioná un archivo de imagen válido (JPG, PNG, WEBP)", "err");
             return;
         }
 
+        // Mostrar vista previa local INMEDIATA
+        const base64Full = await fileToBase64(file);
+        mostrarPreviewVisual(base64Full, file.name);
+
         const token = getToken();
         if (!token) {
-            showToast("Primero ingresá y guardá tu Token de GitHub", "err");
-            // Permitir vista previa local con base64 temporal
-            const base64Full = await fileToBase64(file);
+            showToast("⚠️ Foto cargada en vista previa local. Guardá tu Token para sincronizar en GitHub.", "info");
             document.getElementById("imagen").value = base64Full;
-            previewImage();
             return;
         }
 
@@ -794,9 +902,7 @@
         if (dropText) dropText.innerText = "⏳ Subiendo foto a GitHub...";
 
         try {
-            const base64Full = await fileToBase64(file);
             const base64Data = base64Full.split(',')[1];
-
             const ext = file.name.split('.').pop().toLowerCase() || 'jpg';
             const nombreLimpio = file.name.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
             const pathGitHub = `img/${Date.now()}_${nombreLimpio}.${ext}`;
@@ -804,15 +910,17 @@
             await githubPutFile(pathGitHub, base64Data, `Subida de foto ${pathGitHub} desde Admin Cava`, true);
 
             document.getElementById("imagen").value = pathGitHub;
-            previewImage();
+            mostrarPreviewVisual(base64Full, pathGitHub);
 
-            showToast("¡Foto subida a la carpeta img/ de GitHub con éxito!", "ok");
+            showToast("¡Foto subida a la carpeta img/ de GitHub con éxito! 🍷", "ok");
         } catch (err) {
             console.error(err);
-            showToast("Error al subir foto: " + (err.message || err), "err");
+            showToast("Error al subir a GitHub: " + (err.message || err), "err");
+            document.getElementById("imagen").value = base64Full;
+            mostrarPreviewVisual(base64Full, file.name);
         } finally {
             ocultarLoading();
-            if (dropText) dropText.innerText = "Hacé clic aquí para elegir de tus carpetas o arrastrá tu foto desde tu computadora";
+            if (dropText) dropText.innerText = "Hacé clic aquí para elegir de tus carpetas o arrastrá tu foto";
         }
     }
 
@@ -1085,22 +1193,53 @@
         const fileInput = document.getElementById('imagenFile');
         if (fileInput) fileInput.value = '';
         document.getElementById('tipo').value = 'Tinto';
-        document.getElementById('preview').style.display = 'none';
-        document.getElementById('preview').src = '';
+        mostrarPreviewVisual('', '');
         document.getElementById('formTitle').textContent = 'Agregar Nuevo Vino';
     }
 
-    function previewImage() {
-        const src = (document.getElementById('imagen').value || '').trim();
-        const img = document.getElementById('preview');
+    function mostrarPreviewVisual(src, filename) {
+        const pBox = document.getElementById('previewBox');
+        const pImg = document.getElementById('preview');
+        const pName = document.getElementById('previewFilename');
+        if (!pBox || !pImg) return;
+
         if (src) {
-            img.src = src;
-            img.style.display = 'inline-block';
-            img.onerror = () => { img.style.display = 'none'; };
+            pImg.dataset.triedGh = '';
+            pImg.src = src;
+            pImg.style.display = 'block';
+            pBox.classList.add('has-image');
+            if (pName) {
+                pName.innerText = filename || src.split('/').pop() || 'Imagen activa';
+                pName.title = src;
+            }
+            pImg.onerror = function() {
+                if (!pImg.dataset.triedGh && !src.startsWith('data:') && !src.startsWith('http')) {
+                    pImg.dataset.triedGh = '1';
+                    pImg.src = `https://raw.githubusercontent.com/${USERNAME}/${REPO}/${BRANCH}/${src}`;
+                } else {
+                    if (pName) pName.innerText = "⚠️ No se pudo cargar (" + (src.slice(0, 30)) + ")";
+                }
+            };
         } else {
-            img.style.display = 'none';
-            img.src = '';
+            pBox.classList.remove('has-image');
+            pImg.src = '';
+            pImg.style.display = 'none';
+            pImg.dataset.triedGh = '';
+            if (pName) pName.innerText = 'Sin foto';
         }
+    }
+
+    function previewImage(overrideSrc) {
+        const src = overrideSrc || (document.getElementById('imagen').value || '').trim();
+        mostrarPreviewVisual(src, src);
+    }
+
+    function quitarFoto() {
+        document.getElementById('imagen').value = '';
+        const fInput = document.getElementById('imagenFile');
+        if (fInput) fInput.value = '';
+        mostrarPreviewVisual('', '');
+        showToast('Foto removida', 'info');
     }
 
     function guardarFormulario() {
