@@ -164,17 +164,35 @@
             margin: auto;
         }
 
-        .mv-img {
+        .mv-image-container {
+            position: relative;
             width: 100%;
-            height: 260px;
-            object-fit: cover;
+            height: 290px;
+            background: radial-gradient(circle at 50% 50%, rgba(107, 26, 46, 0.5) 0%, rgba(15, 5, 10, 0.98) 80%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+        }
+
+        .mv-img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.75));
             display: block;
+            transition: transform 0.4s ease;
         }
 
         .mv-img-placeholder {
             width: 100%;
-            height: 260px;
-            background: linear-gradient(135deg, #3a0f20, #1a0a0f);
+            height: 100%;
+            background: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -600,21 +618,27 @@
 
         .item-image-wrapper {
             width: 100%;
-            height: 200px;
+            height: 230px;
             overflow: hidden;
             position: relative;
-            background: linear-gradient(135deg, #2d0e1a, #1a0a0f);
+            background: radial-gradient(circle at 50% 50%, rgba(107, 26, 46, 0.45) 0%, rgba(20, 7, 13, 0.98) 75%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
         }
 
         .item img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            object-fit: contain;
+            object-position: center;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.65));
+            transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .item:hover img {
-            transform: scale(1.07);
+            transform: scale(1.06) translateY(-2px);
         }
 
         .item-img-placeholder {
@@ -624,7 +648,7 @@
             align-items: center;
             justify-content: center;
             font-size: 64px;
-            background: linear-gradient(135deg, #3a0f20, #1a0a0f);
+            background: radial-gradient(circle at 50% 50%, rgba(107, 26, 46, 0.35) 0%, rgba(20, 7, 13, 0.95) 75%);
         }
 
         .item-tipo-badge {
@@ -1081,18 +1105,29 @@
     </div>
 
     <script>
-        const NOMBRE_LOCAL = "Cava de Vinos VALERIO";
+        const NOMBRE_LOCAL = "Cava de Vinos VAL RIO";
 
         // Detección dinámica de GitHub
         const host = window.location.hostname;
         const pathParts = window.location.pathname.split("/");
         let USER = 'tilo-restocafe';
-        let REPO = 'cava-de-vinos';
+        let REPO = 'vinos';
         if (host.includes(".github.io")) {
             USER = host.split(".")[0];
-            REPO = pathParts[1] || "";
+            REPO = pathParts[1] || "vinos";
         }
         const isLocal = host === "localhost" || host === "127.0.0.1" || window.location.protocol === "file:";
+
+        // Smart image fallback helper
+        window.handleCardImgError = function (img, originalSrc) {
+            if (!img.dataset.triedGh && originalSrc && !originalSrc.startsWith('http') && !originalSrc.startsWith('data:')) {
+                img.dataset.triedGh = '1';
+                img.src = `https://raw.githubusercontent.com/${USER}/${REPO}/main/${originalSrc}`;
+            } else {
+                img.style.display = 'none';
+                if (img.nextElementSibling) img.nextElementSibling.style.display = 'flex';
+            }
+        };
 
         // ========== GESTIÓN MULTI-IDIOMA ==========
         let currentLang = localStorage.getItem('cava_lang') || 'es';
@@ -1228,9 +1263,9 @@
                 const maridajeChips = maridajes.map(m => `<span class="mv-maridaje-item">${m}</span>`).join('');
 
                 inner.innerHTML = `
-                    <div style="position:relative;">
+                    <div class="mv-image-container">
                         ${v.imagen
-                        ? `<img class="mv-img" src="${v.imagen}" alt="${v.nombre}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        ? `<img class="mv-img" src="${v.imagen}" alt="${v.nombre}" onerror="handleCardImgError(this, '${v.imagen}')">
                                <div class="mv-img-placeholder" style="display:none;">🍷</div>`
                         : `<div class="mv-img-placeholder">🍷</div>`
                     }
@@ -1368,14 +1403,29 @@
                             if (!res.ok) throw new Error();
                         } catch { res = await fetch(url, { cache: "no-store" }); }
                     } else {
-                        res = await fetch(url, { cache: "no-store" });
+                        try {
+                            res = await fetch(url, { cache: "no-store" });
+                            if (!res.ok) throw new Error();
+                        } catch {
+                            // Fallback a GitHub Raw si falla localmente (por ejemplo en file://)
+                            const ghUrl = `https://raw.githubusercontent.com/${USER}/${REPO}/main/${targetJson}?t=${Date.now()}`;
+                            res = await fetch(ghUrl, { cache: "no-store" });
+                        }
                     }
 
-                    if (!res.ok && targetJson !== 'vinos.json') {
+                    if ((!res || !res.ok) && targetJson !== 'vinos.json') {
                         // Fallback a vinos.json si el archivo en otro idioma aún no existe
                         const fallbackUrl = isLocal ? `./vinos.json?t=${Date.now()}` : `https://raw.githubusercontent.com/${USER}/${REPO}/main/vinos.json?t=${Date.now()}`;
-                        res = await fetch(fallbackUrl, { cache: "no-store" });
+                        try {
+                            res = await fetch(fallbackUrl, { cache: "no-store" });
+                            if (!res.ok) throw new Error();
+                        } catch {
+                            const fallbackGh = `https://raw.githubusercontent.com/${USER}/${REPO}/main/vinos.json?t=${Date.now()}`;
+                            res = await fetch(fallbackGh, { cache: "no-store" });
+                        }
                     }
+
+                    if (!res || !res.ok) throw new Error("No se pudo cargar");
 
                     const data = await res.json();
                     vinos = data.map(v => ({
@@ -1421,7 +1471,7 @@
                 productList.innerHTML = arr.map((v, i) => {
                     const badgeClass = tipoBadgeClass(v.tipo);
                     const imgHtml = v.imagen
-                        ? `<img src="${v.imagen}" alt="${v.nombre}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">`
+                        ? `<img src="${v.imagen}" alt="${v.nombre}" loading="lazy" onerror="handleCardImgError(this, '${v.imagen}')">`
                         : '';
                     return `
                     <div class="item" onclick="abrirFichaById('${v.id}')" data-id="${v.id}" style="animation: fadeUp 0.4s ease ${i * 0.05}s both;">
