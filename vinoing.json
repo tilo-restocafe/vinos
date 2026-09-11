@@ -35,10 +35,10 @@
     "anio": "",
     "tipo": "Tinto",
     "precio": "39000",
-    "imagen": "",
-    "descripcion": "Elegante y complejo. Frutos rojos maduros, mora, chocolate y taninos aterciopelados de gran persistencia.",
-    "historia": "Saint Felicien fue el primer vino argentino en llevar el varietal Malbec en su etiqueta en 1963, marcando un hito histórico.",
-    "maridaje": "Bife de chorizo, entraña jugosa, pastas rellenas con ragú y quesos maduros.",
+    "imagen": "img/1789088115126_images_jpg.jpg",
+    "descripcion": "Elegant and complex. Ripe red fruits, blackberries, chocolate and velvety tannins of great persistence.",
+    "historia": "Saint Felicien was the first Argentine wine to carry the Malbec varietal on its label in 1963, marking a historic milestone.",
+    "maridaje": "Chorizo steak, juicy, pasta stuffed with ragout and ripe cheeses.",
     "categoria": "Red Wines"
   },
   {
@@ -49,7 +49,7 @@
     "anio": "",
     "tipo": "Tinto",
     "precio": "39000",
-    "imagen": "",
+    "imagen": "img/1789088417110_saint_felicien_syrah_png.png",
     "descripcion": "Intenso y especiado. Notas de pimienta negra, ciruela madura, cuero y toques ahumados.",
     "historia": "Criado en barricas de roble francés, representa la máxima expresión y refinamiento de la uva Syrah en el Valle de Uco.",
     "maridaje": "Carnes de caza, cordero al horno con hierbas, guisados y quesos de pasta dura.",
