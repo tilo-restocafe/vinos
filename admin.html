@@ -639,7 +639,7 @@
                     <h4 style="margin:0; color:var(--gold-light); font-family:'Playfair Display',serif; font-size:16px; display:flex; align-items:center; gap:8px;">
                         🌐 Traducciones de Idioma (Opcional)
                     </h4>
-                    <button type="button" onclick="autoTraducir()" style="background:var(--primary); font-size:12px; padding:7px 14px; border-radius:8px; box-shadow:var(--shadow-sm); border:1px solid rgba(201,168,76,0.3);">
+                    <button type="button" onclick="autoTraducir(this)" style="background:var(--primary); font-size:12px; padding:7px 14px; border-radius:8px; box-shadow:var(--shadow-sm); border:1px solid rgba(201,168,76,0.3);">
                         ✨ Auto-traducir con IA
                     </button>
                 </div>
@@ -1099,7 +1099,52 @@
     }
 
     /**************** AUTO TRADUCCIÓN CON IA ****************/
-    async function autoTraducir() {
+    async function translateWithGoogle(text, fromLang, toLang) {
+        if (!text || !text.trim()) return "";
+        const url = `https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=${encodeURIComponent(fromLang)}&tl=${encodeURIComponent(toLang)}&q=${encodeURIComponent(text.trim())}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("Google Translate HTTP " + res.status);
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+            if (typeof data[0] === "string") return data[0];
+            if (Array.isArray(data[0]) && typeof data[0][0] === "string") return data[0][0];
+        }
+        if (typeof data === "string") return data;
+        throw new Error("Formato desconocido de traducción");
+    }
+
+    async function translateWithMyMemory(text, fromLang, toLang) {
+        if (!text || !text.trim()) return "";
+        const email = `tilo.cava.${Math.floor(Math.random() * 10000)}@gmail.com`;
+        const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.trim())}&langpair=${fromLang}|${toLang}&de=${email}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("MyMemory HTTP " + res.status);
+        const data = await res.json();
+        if (data && data.responseData && data.responseData.translatedText) {
+            const txt = data.responseData.translatedText;
+            if (!txt.toUpperCase().includes("MYMEMORY WARNING")) {
+                return txt;
+            }
+        }
+        throw new Error("Límite de cuota MyMemory alcanzado");
+    }
+
+    async function translateText(text, fromLang, toLang) {
+        if (!text || !text.trim()) return text || "";
+        try {
+            return await translateWithGoogle(text, fromLang, toLang);
+        } catch (e1) {
+            console.warn("Fallo Google Translate, probando fallback MyMemory...", e1);
+            try {
+                return await translateWithMyMemory(text, fromLang, toLang);
+            } catch (e2) {
+                console.error("Fallo MyMemory también:", e2);
+                return text;
+            }
+        }
+    }
+
+    async function autoTraducir(btn) {
         const esNombre   = document.getElementById('nombre').value.trim();
         const esCat      = document.getElementById('categoria').value.trim();
         const esDesc     = document.getElementById('descripcion').value.trim();
@@ -1111,23 +1156,15 @@
             return;
         }
 
-        showToast("Traduciendo con IA...", "info");
-
-        async function translateText(text, fromLang, toLang) {
-            if (!text) return "";
-            try {
-                const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${fromLang}|${toLang}`);
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.responseData && data.responseData.translatedText) {
-                        return data.responseData.translatedText;
-                    }
-                }
-            } catch (e) {
-                console.error("Error al traducir texto:", e);
-            }
-            return text;
+        const targetBtn = btn || document.querySelector('.translations-header button');
+        const origText = targetBtn ? targetBtn.innerHTML : "";
+        if (targetBtn) {
+            targetBtn.disabled = true;
+            targetBtn.innerHTML = "⏳ Traduciendo...";
+            targetBtn.style.opacity = "0.7";
         }
+
+        showToast("Traduciendo ficha de catador con IA...", "info");
 
         try {
             const [
@@ -1162,6 +1199,12 @@
             showToast("¡Traducciones automáticas generadas! 🌐", "ok");
         } catch(e) {
             showToast("Error en el servicio de traducción", "err");
+        } finally {
+            if (targetBtn) {
+                targetBtn.disabled = false;
+                targetBtn.innerHTML = origText;
+                targetBtn.style.opacity = "1";
+            }
         }
     }
 
