@@ -360,23 +360,54 @@
 
         /* ========== HEADER ========== */
         header {
-            height: 220px;
+            width: 100%;
+            height: auto;
+            min-height: 160px;
+            max-height: 260px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0d0508;
             overflow: hidden;
             position: relative;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+            padding: 8px 12px;
         }
 
         header img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            max-height: 220px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
-        header::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(15, 5, 10, 0.2), rgba(15, 5, 10, 0.7));
+        @media (max-width: 768px) {
+            header {
+                min-height: 140px;
+                max-height: 220px;
+                padding: 6px 10px;
+            }
+
+            header img {
+                max-height: 190px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                min-height: 120px;
+                max-height: 190px;
+                padding: 4px 8px;
+            }
+
+            header img {
+                max-height: 160px;
+            }
         }
 
         .banner {
