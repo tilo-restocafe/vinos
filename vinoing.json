@@ -9,8 +9,8 @@
     "precio": "27000",
     "imagen": "img/1788924563034_images__1__jpg.jpg",
     "descripcion": "Classic and expressive Malbec. Notes of black plum, berries, violets and a subtle touch of oak.",
-    "historia": "Made by the Catena Zapata winery, Alamos pays tribute to the trees that protect the Mendoza vineyards from the Cordilleran winds.",
-    "maridaje": "Roasted red meats, criollo empanadas, pasta with red sauce and semi-hard cheeses.",
+    "historia": "Made by the Catena Zapata winery, Álamos pays tribute to the trees that protect the Mendoza vineyards from the mountain winds.",
+    "maridaje": "Roasted red meats, Creole empanadas, pasta with red sauce and semi-hard cheeses.",
     "categoria": "Red Wines"
   },
   {
@@ -22,9 +22,9 @@
     "tipo": "Tinto",
     "precio": "27000",
     "imagen": "img/1788924636125_images__2__jpg.jpg",
-    "descripcion": "Structured cabernet with aromas of blackcurrant, roasted pepper, spices and soft vanilla notes.",
-    "historia": "The Álamos de Catena Zapata line seeks to highlight the varietal typicality of the high altitude vineyards in Mendoza.",
-    "maridaje": "Beefsteak, grilled lamb, stews and cured cheeses.",
+    "descripcion": "Structured Cabernet with aromas of black currant, roasted pepper, spices and soft notes of vanilla.",
+    "historia": "The Álamos line from Catena Zapata seeks to highlight the varietal typicality of the high altitude vineyards in Mendoza.",
+    "maridaje": "Steak eye, grilled lamb, stews and cured cheeses.",
     "categoria": "Red Wines"
   },
   {
@@ -50,9 +50,9 @@
     "tipo": "Tinto",
     "precio": "39000",
     "imagen": "img/1789088417110_saint_felicien_syrah_png.png",
-    "descripcion": "Intenso y especiado. Notas de pimienta negra, ciruela madura, cuero y toques ahumados.",
-    "historia": "Criado en barricas de roble francés, representa la máxima expresión y refinamiento de la uva Syrah en el Valle de Uco.",
-    "maridaje": "Carnes de caza, cordero al horno con hierbas, guisados y quesos de pasta dura.",
+    "descripcion": "Intense and spicy. Notes of black pepper, ripe plum, leather and smoky touches.",
+    "historia": "Aged in French oak barrels, it represents the maximum expression and refinement of the Syrah grape in the Uco Valley.",
+    "maridaje": "Game meats, lamb baked with herbs, stews and hard cheeses.",
     "categoria": "Red Wines"
   },
   {
