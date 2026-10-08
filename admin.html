@@ -627,6 +627,10 @@
                         <textarea id="historia" rows="3" placeholder="La bodega fue fundada en..."></textarea>
                     </div>
                     <div class="form-group full-col">
+                        <label>🪵 Crianza / Paso por Barrica</label>
+                        <input id="crianza" type="text" placeholder="Ej: 12 meses en roble francés y americano · o Sin paso por barrica">
+                    </div>
+                    <div class="form-group full-col">
                         <label>🍽️ Maridaje Recomendado</label>
                         <input id="maridaje" type="text" placeholder="Ej: Asado, cordero, pasta con salsa de carne, quesos duros">
                     </div>
@@ -661,6 +665,10 @@
                             <textarea id="descripcion_en" rows="2" placeholder="Tasting notes in English"></textarea>
                         </div>
                         <div>
+                            <label>Crianza / Oak (EN)</label>
+                            <input id="crianza_en" type="text" placeholder="Aging in English (e.g. 12 months in French oak)">
+                        </div>
+                        <div>
                             <label>Historia (EN)</label>
                             <textarea id="historia_en" rows="2" placeholder="History in English"></textarea>
                         </div>
@@ -684,6 +692,10 @@
                         <div>
                             <label>Notas de Degustação (PT)</label>
                             <textarea id="descripcion_pt" rows="2" placeholder="Notas de degustação em português"></textarea>
+                        </div>
+                        <div>
+                            <label>Crianza / Carvalho (PT)</label>
+                            <input id="crianza_pt" type="text" placeholder="Envelhecimento em português (ex: 12 meses em carvalho)">
                         </div>
                         <div>
                             <label>História (PT)</label>
@@ -1148,11 +1160,12 @@
         const esNombre   = document.getElementById('nombre').value.trim();
         const esCat      = document.getElementById('categoria').value.trim();
         const esDesc     = document.getElementById('descripcion').value.trim();
+        const esCrianza  = document.getElementById('crianza').value.trim();
         const esHist     = document.getElementById('historia').value.trim();
         const esMaridaje = document.getElementById('maridaje').value.trim();
 
-        if (!esNombre && !esDesc) {
-            showToast("Escribe primero el nombre o descripción en español para poder traducir", "err");
+        if (!esNombre && !esDesc && !esCrianza) {
+            showToast("Escribe primero el nombre, crianza o descripción en español para poder traducir", "err");
             return;
         }
 
@@ -1168,18 +1181,20 @@
 
         try {
             const [
-                enName, enCat, enDesc, enHist, enMaridaje,
-                ptName, ptCat, ptDesc, ptHist, ptMaridaje
+                enName, enCat, enDesc, enCrianza, enHist, enMaridaje,
+                ptName, ptCat, ptDesc, ptCrianza, ptHist, ptMaridaje
             ] = await Promise.all([
                 translateText(esNombre, 'es', 'en'),
                 translateText(esCat, 'es', 'en'),
                 translateText(esDesc, 'es', 'en'),
+                translateText(esCrianza, 'es', 'en'),
                 translateText(esHist, 'es', 'en'),
                 translateText(esMaridaje, 'es', 'en'),
 
                 translateText(esNombre, 'es', 'pt'),
                 translateText(esCat, 'es', 'pt'),
                 translateText(esDesc, 'es', 'pt'),
+                translateText(esCrianza, 'es', 'pt'),
                 translateText(esHist, 'es', 'pt'),
                 translateText(esMaridaje, 'es', 'pt')
             ]);
@@ -1187,12 +1202,14 @@
             if (enName) document.getElementById('nombre_en').value = enName;
             if (enCat)  document.getElementById('categoria_en').value = enCat;
             if (enDesc) document.getElementById('descripcion_en').value = enDesc;
+            if (enCrianza) document.getElementById('crianza_en').value = enCrianza;
             if (enHist) document.getElementById('historia_en').value = enHist;
             if (enMaridaje) document.getElementById('maridaje_en').value = enMaridaje;
 
             if (ptName) document.getElementById('nombre_pt').value = ptName;
             if (ptCat)  document.getElementById('categoria_pt').value = ptCat;
             if (ptDesc) document.getElementById('descripcion_pt').value = ptDesc;
+            if (ptCrianza) document.getElementById('crianza_pt').value = ptCrianza;
             if (ptHist) document.getElementById('historia_pt').value = ptHist;
             if (ptMaridaje) document.getElementById('maridaje_pt').value = ptMaridaje;
 
@@ -1227,9 +1244,9 @@
     }
 
     function limpiarForm() {
-        ['editId','nombre','bodega','region','anio','precio','imagen','descripcion','historia','maridaje','categoria',
-         'nombre_en','categoria_en','descripcion_en','historia_en','maridaje_en',
-         'nombre_pt','categoria_pt','descripcion_pt','historia_pt','maridaje_pt'].forEach(id => {
+        ['editId','nombre','bodega','region','anio','precio','imagen','descripcion','crianza','historia','maridaje','categoria',
+         'nombre_en','categoria_en','descripcion_en','crianza_en','historia_en','maridaje_en',
+         'nombre_pt','categoria_pt','descripcion_pt','crianza_pt','historia_pt','maridaje_pt'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.value = '';
         });
@@ -1300,6 +1317,7 @@
         const precio      = sanitizePrice(document.getElementById('precio').value);
         const imagen      = document.getElementById('imagen').value.trim();
         const descripcion = document.getElementById('descripcion').value.trim();
+        const crianza     = document.getElementById('crianza').value.trim();
         const historia    = document.getElementById('historia').value.trim();
         const maridaje    = document.getElementById('maridaje').value.trim();
 
@@ -1313,6 +1331,7 @@
             precio,
             imagen,
             descripcion,
+            crianza,
             historia,
             maridaje,
             categoria
@@ -1329,6 +1348,7 @@
             precio:      precio,
             imagen:      imagen,
             descripcion: document.getElementById('descripcion_en').value.trim() || descripcion,
+            crianza:     document.getElementById('crianza_en').value.trim() || crianza,
             historia:    document.getElementById('historia_en').value.trim() || historia,
             maridaje:    document.getElementById('maridaje_en').value.trim() || maridaje,
             categoria:   document.getElementById('categoria_en').value.trim() || categoria
@@ -1345,6 +1365,7 @@
             precio:      precio,
             imagen:      imagen,
             descripcion: document.getElementById('descripcion_pt').value.trim() || descripcion,
+            crianza:     document.getElementById('crianza_pt').value.trim() || crianza,
             historia:    document.getElementById('historia_pt').value.trim() || historia,
             maridaje:    document.getElementById('maridaje_pt').value.trim() || maridaje,
             categoria:   document.getElementById('categoria_pt').value.trim() || categoria
@@ -1387,6 +1408,7 @@
         document.getElementById('precio').value      = v.precio || '';
         document.getElementById('imagen').value      = v.imagen || '';
         document.getElementById('descripcion').value = v.descripcion || '';
+        document.getElementById('crianza').value     = v.crianza || '';
         document.getElementById('historia').value    = v.historia || '';
         document.getElementById('maridaje').value    = v.maridaje || '';
 
@@ -1395,6 +1417,7 @@
         document.getElementById('nombre_en').value      = vEN ? (vEN.nombre || vEN.name || '') : '';
         document.getElementById('categoria_en').value   = vEN ? (vEN.categoria || vEN.category || '') : '';
         document.getElementById('descripcion_en').value = vEN ? (vEN.descripcion || vEN.description || '') : '';
+        document.getElementById('crianza_en').value     = vEN ? (vEN.crianza || vEN.aging || '') : '';
         document.getElementById('historia_en').value    = vEN ? (vEN.historia || vEN.history || '') : '';
         document.getElementById('maridaje_en').value    = vEN ? (vEN.maridaje || vEN.pairing || '') : '';
 
@@ -1402,6 +1425,7 @@
         document.getElementById('nombre_pt').value      = vPT ? (vPT.nombre || vPT.nome || '') : '';
         document.getElementById('categoria_pt').value   = vPT ? (vPT.categoria || '') : '';
         document.getElementById('descripcion_pt').value = vPT ? (vPT.descripcion || vPT.descricao || '') : '';
+        document.getElementById('crianza_pt').value     = vPT ? (vPT.crianza || vPT.envelhecimento || '') : '';
         document.getElementById('historia_pt').value    = vPT ? (vPT.historia || '') : '';
         document.getElementById('maridaje_pt').value    = vPT ? (vPT.maridaje || vPT.harmonizacao || '') : '';
 
