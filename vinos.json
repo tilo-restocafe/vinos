@@ -9,6 +9,7 @@
     "precio": "27000",
     "imagen": "img/1788924563034_images__1__jpg.jpg",
     "descripcion": "Malbec clásico y expresivo. Notas de ciruela negra, frutos del bosque, violetas y un toque sutil de roble.",
+    "crianza": "6 a 9 meses en roble francés y americano",
     "historia": "Elaborado por la bodega Catena Zapata, Álamos rinde homenaje a los árboles que protegen los viñedos mendocinos de los vientos cordilleranos.",
     "maridaje": "Carnes rojas asadas, empanadas criollas, pastas con salsa roja y quesos semiduros.",
     "categoria": "Vinos Tintos"
@@ -23,6 +24,7 @@
     "precio": "27000",
     "imagen": "img/1788924636125_images__2__jpg.jpg",
     "descripcion": "Cabernet estructurado con aromas a grosella negra, pimiento asado, especias y suaves notas de vainilla.",
+    "crianza": "6 to 9 months in French and American oak",
     "historia": "La línea Álamos de Catena Zapata busca resaltar la tipicidad varietal de los viñedos de altura en Mendoza.",
     "maridaje": "Ojo de bife, cordero a la brasa, estofados y quesos curados.",
     "categoria": "Vinos Tintos"
@@ -51,6 +53,7 @@
     "precio": "39000",
     "imagen": "img/1789088417110_saint_felicien_syrah_png.png",
     "descripcion": "Intenso y especiado. Notas de pimienta negra, ciruela madura, cuero y toques ahumados.",
+    "crianza": "14 a 16 meses en barricas de roble francés",
     "historia": "Criado en barricas de roble francés, representa la máxima expresión y refinamiento de la uva Syrah en el Valle de Uco.",
     "maridaje": "Carnes de caza, cordero al horno con hierbas, guisados y quesos de pasta dura.",
     "categoria": "Vinos Tintos"
@@ -65,6 +68,7 @@
     "precio": "60000",
     "imagen": "img/1789508421393_dv_catena_malbec_malbec_54f1e149a3044f216b17755681694954_1024_1024_webp.webp",
     "descripcion": "Corte de viñedos de altura histórico. Gran concentración, notas florales, frutos negros, tabaco y taninos sedosos.",
+    "crianza": "18 meses en barricas de roble francés (50% nuevo)",
     "historia": "Homenaje a Domingo Vicente Catena. Un vino icono creado a partir de parcelas seleccionadas de viñedos históricos familiares.",
     "maridaje": "Cortes de carne premium, bife de lomo, risotto de hongos y quesos añejos.",
     "categoria": "Vinos Tintos"
