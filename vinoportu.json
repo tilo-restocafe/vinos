@@ -1,31 +1,31 @@
 [
   {
     "id": "vino0710",
-    "nombre": "710- Alamos Malbec",
+    "nombre": "710- Álamos Malbec",
     "bodega": "Catena Zapata",
     "region": "Mendoza",
     "anio": "",
     "tipo": "Tinto",
     "precio": "27000",
     "imagen": "img/1788924563034_images__1__jpg.jpg",
-    "descripcion": "Malbec clássico e expressivo. Notas de ameixa preta, bagas, violetas e um toque subtil de carvalho.",
-    "historia": "Feito pela vinícola Catena Zapata, Alamos presta homenagem às árvores que protegem os vinhedos de Mendoza dos ventos de Cordilheira.",
-    "maridaje": "Carnes vermelhas assadas, criollo empanadas, massas com molho vermelho e queijos semiduros.",
-    "categoria": "Vinhos tintos"
+    "descripcion": "Malbec clássico e expressivo. Notas de ameixa preta, frutas vermelhas, violetas e um toque sutil de carvalho.",
+    "historia": "Elaborado pela vinícola Catena Zapata, Álamos homenageia as árvores que protegem os vinhedos de Mendoza dos ventos da montanha.",
+    "maridaje": "Carnes vermelhas assadas, empanadas crioulas, massas com molho vermelho e queijos semiduros.",
+    "categoria": "Vinhos Tintos"
   },
   {
     "id": "vino0711",
-    "nombre": "711- Alamos Cabernet Sauvignon",
+    "nombre": "711- Álamos Cabernet Sauvignon",
     "bodega": "Catena Zapata",
     "region": "Mendoza",
     "anio": "",
     "tipo": "Tinto",
     "precio": "27000",
     "imagen": "img/1788924636125_images__2__jpg.jpg",
-    "descripcion": "Cabernet estruturado com aromas de groselha preta, pimenta assada, especiarias e notas suaves de baunilha.",
-    "historia": "A linha Álamos de Catena Zapata procura destacar a tipicidade varietal dos vinhedos de alta altitude em Mendoza.",
-    "maridaje": "Bife, cordeiro grelhado, guisados e queijos curados.",
-    "categoria": "Vinhos tintos"
+    "descripcion": "Cabernet estruturado com aromas de groselha preta, pimenta torrada, especiarias e suaves notas de baunilha.",
+    "historia": "A linha Álamos da Catena Zapata busca destacar a tipicidade varietal dos vinhedos de altitude de Mendoza.",
+    "maridaje": "Olho de bife, borrego grelhado, ensopados e queijos curados.",
+    "categoria": "Vinhos Tintos"
   },
   {
     "id": "vino0712",
@@ -43,16 +43,16 @@
   },
   {
     "id": "vino0713",
-    "nombre": "713- Saint Felicien Syrah",
+    "nombre": "713- São Félicien Syrah",
     "bodega": "Catena Zapata",
     "region": "Mendoza",
     "anio": "",
     "tipo": "Tinto",
     "precio": "39000",
     "imagen": "img/1789088417110_saint_felicien_syrah_png.png",
-    "descripcion": "Intenso y especiado. Notas de pimienta negra, ciruela madura, cuero y toques ahumados.",
-    "historia": "Criado en barricas de roble francés, representa la máxima expresión y refinamiento de la uva Syrah en el Valle de Uco.",
-    "maridaje": "Carnes de caza, cordero al horno con hierbas, guisados y quesos de pasta dura.",
+    "descripcion": "Intenso e picante. Notas de pimenta preta, ameixa madura, couro e toques esfumaçados.",
+    "historia": "Envelhecido em barricas de carvalho francês, representa a máxima expressão e requinte da uva Syrah do Vale do Uco.",
+    "maridaje": "Carnes de caça, borrego assado com ervas, ensopados e queijos duros.",
     "categoria": "Vinhos Tintos"
   },
   {
