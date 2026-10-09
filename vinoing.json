@@ -1,30 +1,32 @@
 [
   {
     "id": "vino0710",
-    "nombre": "710- Alamos Malbec",
+    "nombre": "710- Álamos Malbec",
     "bodega": "Catena Zapata",
     "region": "Mendoza",
     "anio": "",
     "tipo": "Tinto",
     "precio": "27000",
     "imagen": "img/1788924563034_images__1__jpg.jpg",
-    "descripcion": "Classic and expressive Malbec. Notes of black plum, berries, violets and a subtle touch of oak.",
-    "historia": "Made by the Catena Zapata winery, Álamos pays tribute to the trees that protect the Mendoza vineyards from the mountain winds.",
-    "maridaje": "Roasted red meats, Creole empanadas, pasta with red sauce and semi-hard cheeses.",
+    "descripcion": "Malbec clásico y expresivo. Notas de ciruela negra, frutos del bosque, violetas y un toque sutil de roble.",
+    "crianza": "6 to 9 months in French and American oak",
+    "historia": "Elaborado por la bodega Catena Zapata, Álamos rinde homenaje a los árboles que protegen los viñedos mendocinos de los vientos cordilleranos.",
+    "maridaje": "Carnes rojas asadas, empanadas criollas, pastas con salsa roja y quesos semiduros.",
     "categoria": "Red Wines"
   },
   {
     "id": "vino0711",
-    "nombre": "711- Alamos Cabernet Sauvignon",
+    "nombre": "711- Álamos Cabernet Sauvignon",
     "bodega": "Catena Zapata",
     "region": "Mendoza",
     "anio": "",
     "tipo": "Tinto",
     "precio": "27000",
     "imagen": "img/1788924636125_images__2__jpg.jpg",
-    "descripcion": "Structured Cabernet with aromas of black currant, roasted pepper, spices and soft notes of vanilla.",
-    "historia": "The Álamos line from Catena Zapata seeks to highlight the varietal typicality of the high altitude vineyards in Mendoza.",
-    "maridaje": "Steak eye, grilled lamb, stews and cured cheeses.",
+    "descripcion": "Cabernet estructurado con aromas a grosella negra, pimiento asado, especias y suaves notas de vainilla.",
+    "crianza": "6 to 9 months in French and American oak",
+    "historia": "La línea Álamos de Catena Zapata busca resaltar la tipicidad varietal de los viñedos de altura en Mendoza.",
+    "maridaje": "Ojo de bife, cordero a la brasa, estofados y quesos curados.",
     "categoria": "Red Wines"
   },
   {
@@ -35,10 +37,11 @@
     "anio": "",
     "tipo": "Tinto",
     "precio": "39000",
-    "imagen": "img/1789509284823_img_1518_30102fbcab6a52126817374243057183_1024_1024_webp.webp",
-    "descripcion": "Elegant and complex. Ripe red fruits, blackberry, chocolate and velvety tannins of great persistence.",
-    "historia": "Saint Felicien was the first Argentine wine to carry the Malbec varietal on its label in 1963, marking a historical milestone.",
-    "maridaje": "Chorizo ​​steak, juicy entrails, pasta stuffed with ragout and mature cheeses.",
+    "imagen": "img/1789003508046_images_jpg.jpg",
+    "descripcion": "Elegante y complejo. Frutos rojos maduros, mora, chocolate y taninos aterciopelados de gran persistencia.",
+    "crianza": "12 to 16 months in French (90%) and American (10%) oak",
+    "historia": "Saint Felicien fue el primer vino argentino en llevar el varietal Malbec en su etiqueta en 1963, marcando un hito histórico.",
+    "maridaje": "Bife de chorizo, entraña jugosa, pastas rellenas con ragú y quesos maduros.",
     "categoria": "Red Wines"
   },
   {
@@ -49,10 +52,11 @@
     "anio": "",
     "tipo": "Tinto",
     "precio": "39000",
-    "imagen": "img/1789088417110_saint_felicien_syrah_png.png",
-    "descripcion": "Intense and spicy. Notes of black pepper, ripe plum, leather and smoky touches.",
-    "historia": "Aged in French oak barrels, it represents the maximum expression and refinement of the Syrah grape in the Uco Valley.",
-    "maridaje": "Game meats, lamb baked with herbs, stews and hard cheeses.",
+    "imagen": "",
+    "descripcion": "Intenso y especiado. Notas de pimienta negra, ciruela madura, cuero y toques ahumados.",
+    "crianza": "14 to 16 months in French oak barrels",
+    "historia": "Criado en barricas de roble francés, representa la máxima expresión y refinamiento de la uva Syrah en el Valle de Uco.",
+    "maridaje": "Carnes de caza, cordero al horno con hierbas, guisados y quesos de pasta dura.",
     "categoria": "Red Wines"
   },
   {
@@ -63,10 +67,11 @@
     "anio": "",
     "tipo": "Tinto",
     "precio": "60000",
-    "imagen": "img/1789508421393_dv_catena_malbec_malbec_54f1e149a3044f216b17755681694954_1024_1024_webp.webp",
-    "descripcion": "Court of historic high altitude vineyards. Great concentration, floral notes, black fruits, tobacco and silky tannins.",
-    "historia": "Tribute to Domingo Vicente Catena. An iconic wine created from selected plots of historic family vineyards.",
-    "maridaje": "Premium cuts of meat, loin steak, mushroom risotto and aged cheeses.",
+    "imagen": "",
+    "descripcion": "Corte de viñedos de altura histórico. Gran concentración, notas florales, frutos negros, tabaco y taninos sedosos.",
+    "crianza": "18 months in French oak barrels (50% new)",
+    "historia": "Homenaje a Domingo Vicente Catena. Un vino icono creado a partir de parcelas seleccionadas de viñedos históricos familiares.",
+    "maridaje": "Cortes de carne premium, bife de lomo, risotto de hongos y quesos añejos.",
     "categoria": "Red Wines"
   },
   {
@@ -79,6 +84,7 @@
     "precio": "17500",
     "imagen": "",
     "descripcion": "Fresco, frutal y ligero. Aromas a frutos rojos frescos como frambuesas y cerezas con taninos suaves.",
+    "crianza": "Unoaked · Young and fruity",
     "historia": "Línea joven y versátil de la tradicional bodega Nieto Senetiner, ideal para el disfrute cotidiano.",
     "maridaje": "Pizzas a la piedra, pastas caseras, milanesas y picadas con amigos.",
     "categoria": "Red Wines"
@@ -93,6 +99,7 @@
     "precio": "33500",
     "imagen": "",
     "descripcion": "Cabernet clásico con cuerpo medio, notas de pimiento, mora, cedro y vainilla.",
+    "crianza": "6 months in contact with French oak",
     "historia": "Bodega centenaria fundada en 1888 en Vistalba, referente indiscutido de la enología argentina.",
     "maridaje": "Asado criollo, costillas de cerdo, pastas con salsas consistentes.",
     "categoria": "Red Wines"
@@ -107,6 +114,7 @@
     "precio": "33500",
     "imagen": "",
     "descripcion": "Equilibrado y armónico. Ciruelas maduras, higos secos y notas de cacao con crianza en roble.",
+    "crianza": "6 months in contact with French oak",
     "historia": "Elaborado con uvas de viñedos propios en Vistalba, refleja la tradición y elegancia de Nieto Senetiner.",
     "maridaje": "Bife de chorizo, empanadas de carne cortada a cuchillo y quesos semiduros.",
     "categoria": "Red Wines"
@@ -121,6 +129,7 @@
     "precio": "56500",
     "imagen": "",
     "descripcion": "Vino de alta gama. Profundo, con aromas a mermelada de ciruela, violetas, especias dulces y taninos redondos.",
+    "crianza": "12 months in French oak barrels",
     "historia": "Lleva el nombre de Nicanor Nieto, uno de los fundadores de la bodega en 1888. Un homenaje a la pasión vitivinícola familiar.",
     "maridaje": "Carnes rojas asadas a punto, cordero patagónico, ragú de hongos y quesos curados.",
     "categoria": "Red Wines"
@@ -135,6 +144,7 @@
     "precio": "18000",
     "imagen": "",
     "descripcion": "Malbec accesible y frutado. Frutas rojas como cereza y ciruela con agradable final en boca.",
+    "crianza": "Unoaked · Young and fresh",
     "historia": "Bodega Trapiche, fundada en 1883, es uno de los mayores exponentes del vino argentino en el mundo.",
     "maridaje": "Empanadas, pastas con salsa bolognesa, milanesas napolitanas y pizzas.",
     "categoria": "Red Wines"
@@ -149,6 +159,7 @@
     "precio": "31000",
     "imagen": "",
     "descripcion": "Intenso y elegante. Notas de cassis, pimienta negra, cedro y taninos firmes y pulidos.",
+    "crianza": "9 to 12 months in French and American oak barrels",
     "historia": "Fond de Cave es una de las marcas emblemáticas de Trapiche, sinónimo de calidad y tradición argentina.",
     "maridaje": "Asado de tira, medallones de lomo con salsa de pimienta, pastas rellenas.",
     "categoria": "Red Wines"
@@ -163,6 +174,7 @@
     "precio": "24000",
     "imagen": "",
     "descripcion": "Fresco, moderno y equilibrado. Aromas de fruta fresca combinados con sutiles notas de roble.",
+    "crianza": "3 to 4 months in contact with oak (partial blend)",
     "historia": "Nombrado en honor al paralelo 33° de latitud sur, donde la combinación de sol y clima da origen a vinos de gran frescura.",
     "maridaje": "Carnes a la parrilla, pizzas artesanales, hamburguesas gourmet y pastas.",
     "categoria": "Red Wines"
@@ -177,6 +189,7 @@
     "precio": "26000",
     "imagen": "",
     "descripcion": "Presentación media botella (375 cc). Frutos rojos concentrados, toques de vainilla y taninos aterciopelados.",
+    "crianza": "7 months in French (50%) and American (50%) oak",
     "historia": "Creado por el prestigioso enólogo Mariano Di Paola para la reconocida bodega Rutini Wines.",
     "maridaje": "Ideal para 1 o 2 personas: bife angus, pastas rellenas y picadas.",
     "categoria": "Red Wines"
@@ -191,6 +204,7 @@
     "precio": "32500",
     "imagen": "",
     "descripcion": "Excelente estructura y bouquet. Notas de cereza negra, cacao, canela y roble bien integrado.",
+    "crianza": "7 months in French (50%) and American (50%) oak",
     "historia": "La línea Trumpeter de Rutini Wines es una de las favoritas del público argentino por su consistencia y elegancia.",
     "maridaje": "Ojo de bife a la leña, costillar, lomo a las finas hierbas y quesos estacionados.",
     "categoria": "Red Wines"
@@ -205,6 +219,7 @@
     "precio": "26500",
     "imagen": "",
     "descripcion": "Clásico caramañola. Notas de ciruela madura, vainilla, chocolate y paso redondo por boca.",
+    "crianza": "6 to 9 months in oak vats and barrels",
     "historia": "Vino tradicional de Bodega La Rural (Rutini), famoso por su inconfundible botella estilo caramañola desde hace décadas.",
     "maridaje": "Asado tradicional, empanadas mendocinas, guisos criollos y pastas caseras.",
     "categoria": "Red Wines"
@@ -219,6 +234,7 @@
     "precio": "20500",
     "imagen": "",
     "descripcion": "Vino amable y expresivo. Frutos negros, pimiento dulce y taninos suaves.",
+    "crianza": "Unoaked · Young and direct",
     "historia": "Nacido con el espíritu porteño y bohemio del tradicional barrio de San Telmo.",
     "maridaje": "Carnes asadas, pastas con salsas rojas, pizzas y empanadas.",
     "categoria": "Red Wines"
@@ -233,6 +249,7 @@
     "precio": "20500",
     "imagen": "",
     "descripcion": "Malbec fácil de beber, con notas a ciruela roja, cereza y un final amable.",
+    "crianza": "Unoaked · Young and direct",
     "historia": "Bodega San Telmo elabora vinos directos y accesibles que celebran los momentos compartidos en la mesa argentina.",
     "maridaje": "Parrillada, milanesa a caballo, pastas y tablas de fiambres.",
     "categoria": "Red Wines"
@@ -247,6 +264,7 @@
     "precio": "23000",
     "imagen": "",
     "descripcion": "Malbec sedoso con notas de frambuesa, ciruela madura, vainilla y especias suaves.",
+    "crianza": "4 to 6 months in contact with American and French oak",
     "historia": "Finca Las Moras es pionera en la elaboración de vinos de alta calidad en los valles sanjuaninos.",
     "maridaje": "Carnes a la parrilla, pastas con estofado, pizzas y quesos suaves.",
     "categoria": "Red Wines"
@@ -261,6 +279,7 @@
     "precio": "20500",
     "imagen": "",
     "descripcion": "Frutado y vivaz. Aromas a frutos rojos, ciruela y leves notas de roble.",
+    "crianza": "Unoaked · Young and fruity",
     "historia": "Elaborado con uvas seleccionadas de los valles de San Juan, al pie de la Cordillera de los Andes.",
     "maridaje": "Asado, empanadas de carne, pastas con tuco y tablas de quesos.",
     "categoria": "Red Wines"
@@ -275,6 +294,7 @@
     "precio": "24500",
     "imagen": "",
     "descripcion": "Malbec de cuerpo medio, con frutos rojos frescos, mermelada y taninos redondos.",
+    "crianza": "Unoaked · Fruity and light",
     "historia": "Bodega Dante Robino fue fundada en 1920 en Luján de Cuyo, aunando pasión italiana y terroir mendocino.",
     "maridaje": "Pastas, carnes al horno, pizzas y picadas variadas.",
     "categoria": "Red Wines"
@@ -289,6 +309,7 @@
     "precio": "24500",
     "imagen": "",
     "descripcion": "Notas a pimiento morrón, frutos del bosque, pimienta negra y madera suave.",
+    "crianza": "Unoaked · Fruity and structured",
     "historia": "Línea clásica de Dante Robino que resalta las raíces vitivinícolas de la bodega.",
     "maridaje": "Carnes rojas asadas, empanadas salteñas y quesos duros.",
     "categoria": "Red Wines"
@@ -303,6 +324,7 @@
     "precio": "27000",
     "imagen": "",
     "descripcion": "Fresco y untuoso. Notas de durazno blanco, manzana verde, cítricos y un sutil toque de vainilla.",
+    "crianza": "6 to 9 months on lees (partial French oak)",
     "historia": "Chardonnay de viñedos de altura de Catena Zapata, con fermentación cuidada para realzar frescura y complejidad.",
     "maridaje": "Pescados a la plancha, mariscos, pollo con crema y risottos.",
     "categoria": "White Wines"
@@ -317,6 +339,7 @@
     "precio": "33500",
     "imagen": "",
     "descripcion": "Elegante y equilibrado. Aromas a frutas tropicales, ananá, manteca y flores blancas.",
+    "crianza": "6 months in subtle contact with French oak",
     "historia": "Elaborado por Nieto Senetiner para ofrecer una expresión refinada del Chardonnay mendocino.",
     "maridaje": "Salmón rosado, pastas con mariscos, aves al horno y quesos de cabra.",
     "categoria": "White Wines"
@@ -331,6 +354,7 @@
     "precio": "31000",
     "imagen": "",
     "descripcion": "Chardonnay con paso por roble. Notas de fruta blanca, miel, almendras y fondo tostado.",
+    "crianza": "6 to 9 months in French oak barrels",
     "historia": "Un blanco clásico de Trapiche que combina fruta fresca con la elegancia del roble.",
     "maridaje": "Rabas, lenguado a la manteca negra, pollo con champiñones y quesos suaves.",
     "categoria": "White Wines"
@@ -345,6 +369,7 @@
     "precio": "18000",
     "imagen": "",
     "descripcion": "Vino blanco dulce natural. Aromas a flores blancas, damasco, durazno y un dulzor muy equilibrado.",
+    "crianza": "Unoaked · Late harvest",
     "historia": "Elaborado con uvas cosechadas tardíamente para concentrar azúcares naturales y aromas florales.",
     "maridaje": "Postres frutales, tartas de manzana, tabla de quesos azules y como aperitivo bien frío.",
     "categoria": "White Wines"
@@ -359,6 +384,7 @@
     "precio": "20500",
     "imagen": "",
     "descripcion": "Fresco, frutal y ligero. Notas a manzana, durazno y cítricos frescos.",
+    "crianza": "Unoaked · Crisp and citrusy",
     "historia": "Blanco joven y refrescante diseñado para acompañar almuerzos y cenas livianas.",
     "maridaje": "Ensaladas frescas, mariscos, pescados grillados y empanadas de verdura o atún.",
     "categoria": "White Wines"
@@ -373,6 +399,7 @@
     "precio": "23000",
     "imagen": "",
     "descripcion": "Notas a manzana madura, pera, toques de vainilla y agradable acidez.",
+    "crianza": "3 to 4 months in subtle oak contact",
     "historia": "Uvas provenientes de los soleados valles sanjuaninos que otorgan fruta madura y sedosidad.",
     "maridaje": "Pastas con salsa blanca, milanesa de pescado, quesos frescos y tartas.",
     "categoria": "White Wines"
@@ -387,6 +414,7 @@
     "precio": "26500",
     "imagen": "",
     "descripcion": "Botella caramañola histórica. Fruta tropical, toques mantecosos y roble elegante.",
+    "crianza": "3 to 6 months in French oak (partial)",
     "historia": "Un clásico indiscutido de las mesas argentinas producido por Bodega La Rural de la familia Rutini.",
     "maridaje": "Pescados de río, mariscos salteados, pollo al limón y risottos.",
     "categoria": "White Wines"
@@ -401,6 +429,7 @@
     "precio": "32500",
     "imagen": "",
     "descripcion": "Muy aromático y fresco. Ruda, pomelo rosado, maracuyá y una acidez vibrante y crujiente.",
+    "crianza": "Unoaked · 100% stainless steel",
     "historia": "Sauvignon Blanc de gran altitud elaborado por Mariano Di Paola en el Valle de Uco.",
     "maridaje": "Ceviche, sushi, rabas, quesos de cabra y ensaladas mediterráneas.",
     "categoria": "White Wines"
@@ -415,6 +444,7 @@
     "precio": "16000",
     "imagen": "",
     "descripcion": "Selección especial de la casa en botella de 750 cc. A elección: tinto o blanco de excelente calidad.",
+    "crianza": "House young selection (unoaked)",
     "historia": "Nuestra cuidada selección de bodega para disfrutar en la mesa de VAL RIO.",
     "maridaje": "Platos clásicos de nuestra cocina, pastas, minutas y pizzas.",
     "categoria": "House Wines"
@@ -429,6 +459,7 @@
     "precio": "6500",
     "imagen": "",
     "descripcion": "Copa individual servida a temperatura ideal. Tinto o blanco a elección.",
+    "crianza": "House young selection (unoaked)",
     "historia": "Ideal para acompañar tu almuerzo o cena con una copa perfecta.",
     "maridaje": "Entradas, pizzas, pastas y minutas de la casa.",
     "categoria": "House Wines"
@@ -443,6 +474,7 @@
     "precio": "25500",
     "imagen": "",
     "descripcion": "Sidra premium elaborada con manzanas seleccionadas del Alto Valle de Río Negro. Delicadas burbujas y sabor equilibrado.",
+    "crianza": "Traditional tank fermentation · Unoaked",
     "historia": "La sidra premium preferida de Argentina, elaborada según la receta tradicional de 1888.",
     "maridaje": "Tablas de quesos y fiambres, carnes de cerdo, pizzas y brindis.",
     "categoria": "Ciders & Champagnes"
@@ -457,6 +489,7 @@
     "precio": "48500",
     "imagen": "",
     "descripcion": "Corte de Chardonnay y Pinot Noir. Cítrico, fresco, con sutiles notas a pan tostado y burbujas finas persistentes.",
+    "crianza": "Charmat Method · 3 to 6 months on lees",
     "historia": "Chandon se estableció en Mendoza en 1959, convirtiéndose en el referente absoluto del espumante en el país.",
     "maridaje": "Brindis, mariscos, sushi, entradas gourmet y postres ligeros.",
     "categoria": "Ciders & Champagnes"
@@ -471,6 +504,7 @@
     "precio": "49000",
     "imagen": "",
     "descripcion": "Seco, refinado y elegante. Notas de frutos secos, manzana verde y burbuja cremosa.",
+    "crianza": "Aged on lees · Fine bubbles",
     "historia": "Espumante de alta gama elaborado bajo estrictos estándares de la casa Nieto Senetiner.",
     "maridaje": "Ostras, salmón ahumado, quesos maduros y celebraciones especiales.",
     "categoria": "Ciders & Champagnes"
@@ -485,6 +519,7 @@
     "precio": "22000",
     "imagen": "",
     "descripcion": "Presentación individual (187 cc) de Chandon Extra Brut. Burbujas frescas y vivaces.",
+    "crianza": "Charmat Method · 3 to 6 months on lees",
     "historia": "La icónica botellita individual de Chandon para brindar en cualquier momento.",
     "maridaje": "Aperitivo personal, entradas de mar y picadas.",
     "categoria": "Ciders & Champagnes"
@@ -499,6 +534,7 @@
     "precio": "9500",
     "imagen": "",
     "descripcion": "Aperitivo a base de hierbas aromáticas y cítricos. Servido con hielo y limón, acompañado de triolet de ingredientes.",
+    "crianza": "",
     "historia": "Clásico aperitivo argentino con más de 80 años de historia en los bares y restaurantes del país.",
     "maridaje": "Triolet de ingredientes, aceitunas, snacks y picadas.",
     "categoria": "Aperitifs"
@@ -513,6 +549,7 @@
     "precio": "9500",
     "imagen": "",
     "descripcion": "Vermut clásico (Rosso o Bianco) servido con rodaja de naranja o limón, soda y trío de ingredientes.",
+    "crianza": "",
     "historia": "Tradición italiana arraigada en la cultura gastronómica de VAL RIO desde 1976.",
     "maridaje": "Triolet de ingredientes, salamines, quesos y empanadas.",
     "categoria": "Aperitifs"
@@ -527,6 +564,7 @@
     "precio": "9500",
     "imagen": "",
     "descripcion": "Vermouth italiano servido con hielo y piel de cítrico, acompañado de trío de ingredientes.",
+    "crianza": "",
     "historia": "El vermut más famoso del mundo, símbolo de elegancia y sofisticación.",
     "maridaje": "Triolet de ingredientes, aceitunas verdes y fiambres seleccionados.",
     "categoria": "Aperitifs"
@@ -541,6 +579,7 @@
     "precio": "9500",
     "imagen": "",
     "descripcion": "Aperitivo rojo amargo con notas herbales y naranja. Servido con soda o jugo de naranja y triolet.",
+    "crianza": "",
     "historia": "Creado en Milán en 1860, un clásico insustituible para antes de cenar.",
     "maridaje": "Triolet de ingredientes, quesos curados y pizzas.",
     "categoria": "Aperitifs"
@@ -555,6 +594,7 @@
     "precio": "10500",
     "imagen": "",
     "descripcion": "Aperitivo digestivo de hierbas amargas servido puro o con soda/hielo, acompañado de triolet.",
+    "crianza": "",
     "historia": "La bebida más querida de la cultura de bar argentina.",
     "maridaje": "Triolet de ingredientes, empanadas y picadas de campo.",
     "categoria": "Aperitifs"
@@ -569,6 +609,7 @@
     "precio": "5000",
     "imagen": "",
     "descripcion": "Medida adicional de Fernet para cortar tu aperitivo.",
+    "crianza": "",
     "historia": "El toque justo para personalizar tu aperitivo favorito.",
     "maridaje": "Aperitivos clásicos.",
     "categoria": "Aperitifs"
@@ -583,6 +624,7 @@
     "precio": "22000",
     "imagen": "",
     "descripcion": "Selección especial de 6 variedades de ingredientes y copetín para acompañar aperitivos.",
+    "crianza": "",
     "historia": "Tradición de VAL RIO para compartir en la previa de la mesa.",
     "maridaje": "Ideal con toda nuestra carta de aperitivos, vermuts y cócteles.",
     "categoria": "Aperitifs"
@@ -597,6 +639,7 @@
     "precio": "16500",
     "imagen": "",
     "descripcion": "Gancia batido con jugo de limón natural, azúcar y abundante hielo picado.",
+    "crianza": "",
     "historia": "El trago clásico y refrescante de los bares tradicionales argentinos.",
     "maridaje": "Picadas, rabas, pizzas y empanadas.",
     "categoria": "Mixed Drinks"
@@ -611,6 +654,7 @@
     "precio": "16500",
     "imagen": "",
     "descripcion": "Ron Bacardí con gaseosa cola, jugo de limón exprimido y rodaja fresca.",
+    "crianza": "",
     "historia": "Trago emblemático caribeño con el balance perfecto entre dulzor y frescura.",
     "maridaje": "Hamburguesas, pizzas de la casa y carnes.",
     "categoria": "Mixed Drinks"
@@ -625,6 +669,7 @@
     "precio": "16500",
     "imagen": "",
     "descripcion": "Whisky nacional servido con gaseosa cola bien fría y hielo en vaso de trago largo.",
+    "crianza": "",
     "historia": "Un clásico de la noche y de los bares tradicionales de Buenos Aires.",
     "maridaje": "Picadas, pizzas y sándwiches gourmet.",
     "categoria": "Mixed Drinks"
@@ -639,6 +684,7 @@
     "precio": "16500",
     "imagen": "",
     "descripcion": "Fernet Branca servido con Coca-Cola y hielo al estilo argentino tradicional.",
+    "crianza": "",
     "historia": "La combinación por excelencia de las reuniones argentinas.",
     "maridaje": "Pizzas, empanadas de carne, asado y picadas.",
     "categoria": "Mixed Drinks"
@@ -653,6 +699,7 @@
     "precio": "16500",
     "imagen": "",
     "descripcion": "Gin con agua tónica premium, rodaja de limón o pepino y abundante hielo cristalino.",
+    "crianza": "",
     "historia": "El cóctel botánico por excelencia, refrescante y aromático.",
     "maridaje": "Pescados, mariscos, tablas de quesos y pizzas livianas.",
     "categoria": "Mixed Drinks"
@@ -667,6 +714,7 @@
     "precio": "29000",
     "imagen": "",
     "descripcion": "Jarra grande de vino blanco con frutas frescas de estación cortadas, licor de naranja, hielo y azúcar.",
+    "crianza": "",
     "historia": "Receta tradicional de la casa VAL RIO desde 1976, ideal para compartir en grupo.",
     "maridaje": "Pizzas, pastas, picadas y momentos festivos en familia o amigos.",
     "categoria": "Clericot"
@@ -681,6 +729,7 @@
     "precio": "25500",
     "imagen": "",
     "descripcion": "Jarra chica de vino blanco con trozos de fruta fresca, licor de naranja, hielo y azúcar.",
+    "crianza": "",
     "historia": "Porción ideal para 2 personas con todo el sabor y la frescura del clericot de VAL RIO.",
     "maridaje": "Pastas, pizzas, milanesas y picadas.",
     "categoria": "Clericot"
@@ -695,6 +744,7 @@
     "precio": "29000",
     "imagen": "",
     "descripcion": "Jarra grande elaborada con sidra espumante, frutas frescas picadas, licor de naranja y hielo.",
+    "crianza": "",
     "historia": "Una alternativa efervescente y dulce, muy solicitada para brindar y compartir.",
     "maridaje": "Pizzas, empanadas, picadas y postres.",
     "categoria": "Clericot"
@@ -709,6 +759,7 @@
     "precio": "25500",
     "imagen": "",
     "descripcion": "Jarra chica de sidra espumante con trozos de fruta fresca, licor de naranja y hielo.",
+    "crianza": "",
     "historia": "Refrescante y burbujeante, preparada al instante con fruta fresca seleccionada.",
     "maridaje": "Pizzas y minutas clásicas de VAL RIO.",
     "categoria": "Clericot"
@@ -723,6 +774,7 @@
     "precio": "12500",
     "imagen": "",
     "descripcion": "Ron blanco clásico con notas sutiles de vainilla y almendra. Servido puro o con hielo.",
+    "crianza": "",
     "historia": "Fundada en 1862 en Santiago de Cuba, Bacardí es la marca de ron más premiada del mundo.",
     "maridaje": "Snacks salados, frutos secos y tapas.",
     "categoria": "Spirits & Liquors"
@@ -737,6 +789,7 @@
     "precio": "13500",
     "imagen": "",
     "descripcion": "Tequila mexicano auténtico de agave azul. Servido en shot tradicional con limón y sal.",
+    "crianza": "",
     "historia": "Elaborado ininterrumpidamente desde 1795 en Tequila, Jalisco.",
     "maridaje": "Limón, sal, quesos picantes y aperitivos.",
     "categoria": "Spirits & Liquors"
@@ -751,6 +804,7 @@
     "precio": "12500",
     "imagen": "",
     "descripcion": "Aguardiente brasileño de caña de azúcar destilada con aromas dulces y vegetales.",
+    "crianza": "",
     "historia": "Una de las cachaças más tradicionales de Brasil, con añejamiento en toneles de madera nativa.",
     "maridaje": "Tapas saladas, quesos y platos con limón.",
     "categoria": "Spirits & Liquors"
@@ -765,6 +819,7 @@
     "precio": "10200",
     "imagen": "",
     "descripcion": "London dry gin nacional con notas de enebro, cardamomo y toques cítricos.",
+    "crianza": "",
     "historia": "Marca histórica de destilados en Argentina, clásica en la coctelería nacional.",
     "maridaje": "Aceitunas, frutos secos y picadas.",
     "categoria": "Spirits & Liquors"
@@ -779,6 +834,7 @@
     "precio": "14500",
     "imagen": "",
     "descripcion": "London Dry Gin premium destilado con 9 botánicos tradicionales: enebro, piel de naranja amarga y cilantro.",
+    "crianza": "",
     "historia": "Elaborado en el corazón de Londres desde 1863 siguiendo la receta original de James Burrough.",
     "maridaje": "Tónica, piel de cítricos y aperitivos finos.",
     "categoria": "Spirits & Liquors"
@@ -793,6 +849,7 @@
     "precio": "14500",
     "imagen": "",
     "descripcion": "Vodka sueco ultra puro elaborado con trigo de invierno y agua profunda de pozo artesiano.",
+    "crianza": "",
     "historia": "Producido en el sur de Suecia desde 1879 bajo el método de destilación continua.",
     "maridaje": "Cítricos, jugos, mariscos y picadas.",
     "categoria": "Spirits & Liquors"
@@ -807,6 +864,7 @@
     "precio": "12500",
     "imagen": "",
     "descripcion": "Whisky blended nacional de carácter suave con notas de malta tostada y caramelo.",
+    "crianza": "",
     "historia": "Uno de los whiskys más populares y consumidos en los bares de Argentina.",
     "maridaje": "Hielo, frutos secos, quesos y chocolates.",
     "categoria": "Whiskies"
@@ -821,6 +879,7 @@
     "precio": "12500",
     "imagen": "",
     "descripcion": "Blend nacional equilibrado con paso por madera y notas amaderadas suaves.",
+    "crianza": "",
     "historia": "Elaborado para ofrecer una alternativa nacional agradable y rendidora.",
     "maridaje": "Picadas, snacks y postres con dulce de leche.",
     "categoria": "Whiskies"
@@ -835,6 +894,7 @@
     "precio": "12500",
     "imagen": "",
     "descripcion": "El clásico whisky argentino por excelencia. Notas de roble, vainilla y final seco.",
+    "crianza": "",
     "historia": "Emblema de los bares y tertulias porteñas desde mediados del siglo XX.",
     "maridaje": "Servido con hielo o soda, tablas de fiambres y empanadas.",
     "categoria": "Whiskies"
@@ -849,6 +909,7 @@
     "precio": "26500",
     "imagen": "",
     "descripcion": "Blended Scotch Whisky añejado por un mínimo de 12 años. Miel, manzana madura, vainilla y avellana.",
+    "crianza": "Aged a minimum of 12 years in oak casks",
     "historia": "Creado en el corazón de las Tierras Altas de Escocia por los hermanos John y James Chivas.",
     "maridaje": "Puro o con una roca de hielo, chocolates amargos y quesos añejos.",
     "categoria": "Whiskies"
@@ -863,6 +924,7 @@
     "precio": "27000",
     "imagen": "",
     "descripcion": "Icono mundial de 12 años. Notas ahumadas características, fruta oscura, vainilla y especias.",
+    "crianza": "Aged 12 years in Scottish oak casks",
     "historia": "La mezcla de whiskies de malta y grano de los 4 rincones de Escocia más reconocida del planeta.",
     "maridaje": "Disfrute solo o con hielo, carnes asadas y chocolates con frutos secos.",
     "categoria": "Whiskies"
@@ -877,6 +939,7 @@
     "precio": "20500",
     "imagen": "",
     "descripcion": "Blended scotch ligero y suave compuesto por más de 40 whiskies individuales de Speyside.",
+    "crianza": "Aged in oak casks",
     "historia": "Fundada en Londres en 1749, una de las marcas de whisky escocés más célebres del mundo.",
     "maridaje": "Con hielo, gaseosa manzana/ginger ale o frutos secos tostados.",
     "categoria": "Whiskies"
@@ -891,6 +954,7 @@
     "precio": "20500",
     "imagen": "",
     "descripcion": "Añejado en tres tipos de madera. Notas complejas de pera, vainilla y sutil humo dulce.",
+    "crianza": "Triple wood aged in distinct oak casks",
     "historia": "Elaborado por la familia Grant desde 1887 en su distintiva botella triangular.",
     "maridaje": "Solo, con hielo, o con quesos maduros y postres de chocolate.",
     "categoria": "Whiskies"
@@ -905,6 +969,7 @@
     "precio": "18000",
     "imagen": "",
     "descripcion": "Crema de licor irlandesa elaborada con crema de leche fresca y auténtico whisky irlandés.",
+    "crianza": "",
     "historia": "Lanzado en 1974, combinó por primera vez crema de leche fresca y whisky en una emulsión perfecta.",
     "maridaje": "Con hielo, sobre café expresso o con postres y helados.",
     "categoria": "Liqueurs"
@@ -919,6 +984,7 @@
     "precio": "18000",
     "imagen": "",
     "descripcion": "Licor herbal italiano color amarillo dorado con azafrán, menta, enebro y canela.",
+    "crianza": "",
     "historia": "Producido en Benevento desde 1860, conocido legendariamente como el 'licor de las brujas'.",
     "maridaje": "Digestivo ideal tras la cena, solo o con café.",
     "categoria": "Liqueurs"
@@ -933,6 +999,7 @@
     "precio": "12000",
     "imagen": "",
     "descripcion": "Licor de café con notas de vainilla de Madagascar y ron añejo.",
+    "crianza": "",
     "historia": "Clásico licor de café preferido para sobremesa y cócteles en Argentina.",
     "maridaje": "Postres con chocolate, tiramisú, café y helado.",
     "categoria": "Liqueurs"
@@ -947,6 +1014,7 @@
     "precio": "18500",
     "imagen": "",
     "descripcion": "Ron, agua con gas, azúcar, hojas de menta fresca maceradas, jugo de limón y abundante hielo picado.",
+    "crianza": "",
     "historia": "Cóctel icónico de La Habana, refrescante y aromático por excelencia.",
     "maridaje": "Entradas frescas, rabas, pizzas y picadas.",
     "categoria": "Cocktails"
@@ -961,6 +1029,7 @@
     "precio": "18500",
     "imagen": "",
     "descripcion": "Vodka, jugo de limón fresco machacado con azúcar y hielo picado.",
+    "crianza": "",
     "historia": "Variación moderna de la caipirinha brasileña a base de vodka de primera calidad.",
     "maridaje": "Pizzas, empanadas, pastas y tablas de mariscos.",
     "categoria": "Cocktails"
@@ -975,6 +1044,7 @@
     "precio": "12500",
     "imagen": "",
     "descripcion": "Brandy destilado tradicional de uvas sanjuaninas, añejado en toneles de roble con bouquet cálido y notas ambarinas.",
+    "crianza": "Aged in oak vats",
     "historia": "El coñac/brandy argentino más emblemático, fiel representante de la tradición de sobremesa nacional.",
     "maridaje": "Café expresso, chocolate amargo, frutos secos y sobremesa.",
     "categoria": "Cognac & Brandy"
