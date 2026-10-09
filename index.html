@@ -325,6 +325,47 @@
             border-radius: 14px;
         }
 
+        /* ========== CRIANZA / BARRICA ========== */
+        .mv-crianza-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, rgba(201, 168, 76, 0.12), rgba(107, 26, 46, 0.28));
+            border: 1px solid rgba(201, 168, 76, 0.35);
+            border-radius: 14px;
+            padding: 11px 16px;
+            margin: 0 0 16px;
+            text-align: left;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+        }
+
+        .mv-crianza-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+        }
+
+        .mv-crianza-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .mv-crianza-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--gold);
+        }
+
+        .mv-crianza-val {
+            font-size: 13.5px;
+            color: var(--cream);
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
         .mv-footer {
             display: flex;
             justify-content: space-between;
@@ -1136,7 +1177,7 @@
     </div>
 
     <script>
-        const NOMBRE_LOCAL = "Cava de Vinos VALeRIO";
+        const NOMBRE_LOCAL = "Cava de Vinos VAL RIO";
 
         // Detección dinámica de GitHub
         const host = window.location.hostname;
@@ -1172,6 +1213,7 @@
                 sommelierTitle: "🍷 Sommelier Digital",
                 sommelierSub: "Selección y sugerencias de hoy",
                 notasCata: "🍇 Notas de Cata",
+                crianzaLabel: "🪵 Crianza / Barrica",
                 historia: "📖 Historia",
                 maridaje: "🍽️ Maridaje Recomendado",
                 sinResultados: "No se encontraron vinos.",
@@ -1190,6 +1232,7 @@
                 sommelierTitle: "🍷 Digital Sommelier",
                 sommelierSub: "Today's selection & recommendations",
                 notasCata: "🍇 Tasting Notes",
+                crianzaLabel: "🪵 Aging / Oak",
                 historia: "📖 History",
                 maridaje: "🍽️ Recommended Pairing",
                 sinResultados: "No wines found.",
@@ -1208,6 +1251,7 @@
                 sommelierTitle: "🍷 Sommelier Digital",
                 sommelierSub: "Seleção e recomendações de hoje",
                 notasCata: "🍇 Notas de Degustação",
+                crianzaLabel: "🪵 Envelhecimento / Carvalho",
                 historia: "📖 História",
                 maridaje: "🍽️ Harmonização Recomendada",
                 sinResultados: "Nenhum vinho encontrado.",
@@ -1314,6 +1358,16 @@
 
                         <div class="mv-section-label">${t.notasCata}</div>
                         <p class="mv-text">${v.descripcion || ''}</p>
+
+                        ${v.crianza ? `
+                        <div class="mv-crianza-box">
+                            <span class="mv-crianza-icon">🪵</span>
+                            <div class="mv-crianza-content">
+                                <span class="mv-crianza-label">${t.crianzaLabel || 'Crianza / Barrica'}</span>
+                                <span class="mv-crianza-val">${v.crianza}</span>
+                            </div>
+                        </div>
+                        ` : ''}
 
                         ${v.historia ? `
                         <hr class="mv-divider">
@@ -1469,6 +1523,7 @@
                         precio: v.precio || v.price || v.preco || '0',
                         imagen: v.imagen || v.image || v.imagem || '',
                         descripcion: v.descripcion || v.description || v.descricao || '',
+                        crianza: v.crianza || v.aging || v.envelhecimento || '',
                         historia: v.historia || v.history || '',
                         maridaje: v.maridaje || v.pairing || v.harmonizacao || '',
                         categoria: v.categoria || v.category || 'Vinos'
